@@ -16,7 +16,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>HotelplanEnMieux</title>
+        <title><?=$title;?></title>
         <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous"></script>
@@ -29,31 +29,32 @@
     </head>
     <body id="page-top">
         <!-- Navigation-->
-        <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top navbar-shrink" id="mainNav">
             <div class="container">
-                <a class="navbar-brand js-scroll-trigger" href="index.html"><img src="assets/img/navbar-logo.svg" alt="" /></a>
+                <a class="navbar-brand js-scroll-trigger" href="index.php?action=home"><img src="../assets/img/navbar-logo.svg" alt="" /></a>
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     Menu
                     <i class="fas fa-bars ml-1"></i>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav text-uppercase ml-auto">
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.html/#travel">Voyages</a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#">Mes voyages</a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#">Crée une annonces</a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#">Login/Register/Profil</a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="Contact.html">Contact</a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.php?action=home#travel">Voyages</a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.php">Mes voyages</a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#">Crée une annonce</a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.php?action=login">Login/Register/Profil</a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.php?action=contact">Contact</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
-        <!-- mainNav Grid-->
-        <section class="page-section bg-light" id="mainNav">
 
+          <!--__________CONTENU__________-->
+            <div class="bg-light" id="divMain">
+                <?=$content; ?>
+            </div>
 
+          <!--________FIN CONTENU________-->
 
-
-        </section>
         <!-- Footer-->
         <footer class="footer py-4">
             <div class="container">
@@ -77,9 +78,8 @@
         <!-- Third party plugin JS-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
         <!-- Contact form JS-->
-        <script src="assets/mail/jqBootstrapValidation.js"></script>
-        <script src="assets/mail/contact_me.js"></script>
+        <script src="../assets/mail/jqBootstrapValidation.js"></script>
+        <script src="../assets/mail/contact_me.js"></script>
         <!-- Core theme JS-->
-        <script src="js/scripts.js"></script>
     </body>
 </html>
