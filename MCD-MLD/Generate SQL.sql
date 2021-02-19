@@ -25,7 +25,10 @@ CREATE TABLE IF NOT EXISTS `activity` (
   `price` float NOT NULL DEFAULT '0',
   `hypertextLink` varchar(50) NOT NULL DEFAULT '',
   `remark` text NOT NULL,
-  PRIMARY KEY (`ID`)
+  `IDTravel` int(11) NOT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FK_TravelToActivity` (`IDTravel`),
+  CONSTRAINT `FK_TravelToActivity` FOREIGN KEY (`IDTravel`) REFERENCES `travel` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Les données exportées n'étaient pas sélectionnées.
@@ -52,7 +55,10 @@ CREATE TABLE IF NOT EXISTS `lodgingplace` (
   `reservationCode` varchar(50) NOT NULL DEFAULT '',
   `hypertextLink` varchar(50) NOT NULL DEFAULT '',
   `remark` text NOT NULL,
-  PRIMARY KEY (`ID`)
+  `IDTravel` int(11) NOT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FK_TravelToLodgingplace` (`IDTravel`),
+  CONSTRAINT `FK_TravelToLodgingplace` FOREIGN KEY (`IDTravel`) REFERENCES `travel` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Les données exportées n'étaient pas sélectionnées.
@@ -70,7 +76,7 @@ CREATE TABLE IF NOT EXISTS `loguser` (
 -- Listage de la structure de la table hotelplanenmieux. participate
 CREATE TABLE IF NOT EXISTS `participate` (
   `ID` int(11) NOT NULL,
-  `userAccepted` binary(1) NOT NULL DEFAULT '\0',
+  `userAccepted` binary(1) NOT NULL,
   `IDLoguser` int(11) NOT NULL,
   `IDTravel` int(11) NOT NULL,
   PRIMARY KEY (`ID`),
@@ -93,7 +99,10 @@ CREATE TABLE IF NOT EXISTS `transport` (
   `schedule` varchar(50) NOT NULL DEFAULT '',
   `hypertextLink` varchar(50) NOT NULL DEFAULT '',
   `remark` text NOT NULL,
-  PRIMARY KEY (`ID`)
+  `IDTravel` int(11) NOT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FK_TravelToTransport` (`IDTravel`),
+  CONSTRAINT `FK_TravelToTransport` FOREIGN KEY (`IDTravel`) REFERENCES `travel` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Les données exportées n'étaient pas sélectionnées.
@@ -105,7 +114,10 @@ CREATE TABLE IF NOT EXISTS `travel` (
   `destination` varchar(50) NOT NULL DEFAULT '',
   `image` varchar(50) NOT NULL DEFAULT '',
   `isVisible` binary(1) NOT NULL,
-  PRIMARY KEY (`ID`)
+  `IDLogUser` int(11) NOT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FK_LogUserToTravel` (`IDLogUser`),
+  CONSTRAINT `FK_LogUserToTravel` FOREIGN KEY (`IDLogUser`) REFERENCES `loguser` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Les données exportées n'étaient pas sélectionnées.
@@ -113,7 +125,7 @@ CREATE TABLE IF NOT EXISTS `travel` (
 -- Listage de la structure de la table hotelplanenmieux. travel_checklist
 CREATE TABLE IF NOT EXISTS `travel_checklist` (
   `ID` int(11) NOT NULL,
-  `isOk` varchar(50) NOT NULL DEFAULT '',
+  `isOk` binary(1) NOT NULL,
   `IDTravel` int(11) NOT NULL DEFAULT '0',
   `IDChecklist` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID`),
