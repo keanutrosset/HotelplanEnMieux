@@ -21,7 +21,7 @@ ob_start();
       <form class='form' method='POST'>
           <div class="container">
               <label class="text-muted" for="userEmail"><h5>Adresse mail</h5></label>
-              <input type="email" placeholder="Entrez votre adresse mail" name="inputUserEmailAddress" required>
+              <input type="email" placeholder="Entrez votre adresse mail" name="inputemail" required>
             </br>
               <label class="text-muted" for="userPsw"><h5>Mot de passe</h5></label>
               <input type="password" placeholder="Entrez votre mot de passe" name="inputUserPsw" required>

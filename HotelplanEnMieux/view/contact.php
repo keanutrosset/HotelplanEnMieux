@@ -9,7 +9,7 @@
  */
 
 
-$title = "HotelplanEnMieux - Login";
+$title = "HotelplanEnMieux - Contact";
 
 // tampon de flux stocké en mémoire
 ob_start();

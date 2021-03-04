@@ -31,7 +31,7 @@ ob_start();
               <table style="margin: auto; border-collapse: separate; border-spacing: 20px 0;">
                 <tr>
                 <th style="text-align: left"><label class="text-muted" for="userEmail"><h5>Adresse mail</h5></label></th>
-                <td><input type="email" placeholder="Entrez votre adresse mail" name="inputUserEmailAddress" required></td>
+                <td><input type="email" placeholder="Entrez votre adresse mail" name="inputEmail" required></td>
               </tr>
               <tr>
 

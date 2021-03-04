@@ -31,18 +31,22 @@
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-dark fixed-top navbar-shrink" id="mainNav">
             <div class="container">
-                <a class="navbar-brand js-scroll-trigger" href="index.php?action=home"><img src="../assets/img/navbar-logo.svg" alt="" /></a>
+                <a class="navbar-brand js-scroll-trigger" href="?action=home"><img src="../assets/img/navbar-logo.svg" alt="" /></a>
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     Menu
                     <i class="fas fa-bars ml-1"></i>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav text-uppercase ml-auto">
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.php?action=home#travel">Voyages</a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.php">Mes voyages</a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#">Crée une annonce</a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.php?action=login">Login/Register/Profil</a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.php?action=contact">Contact</a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="?action=home#travel">Voyages</a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="">Mes voyages</a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="?action=createTravel">Crée une annonce</a></li>
+                        <?php if(isset($_SESSION["userId"])):?>
+                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="?action=profil">Profil</a></li>
+                        <?php else:?>
+                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="?action=login">Se connecter / S'enregistrer</a></li>
+                        <?php endif?>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="?action=contact">Contact</a></li>
                     </ul>
                 </div>
             </div>
@@ -56,7 +60,7 @@
           <!--________FIN CONTENU________-->
 
         <!-- Footer-->
-        <footer class="footer py-4">
+        <footer class="footer py-4" style="margin-top:25px">
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-lg-4 text-lg-left">Copyright © HotelplanEnMieux 2021</div>

@@ -11,7 +11,11 @@
 
 session_start();
 
+/*print_r("<br><br><br><br>");
+print_r($_SESSION);*/
+
 require "controler/travel.php";
+require "controler/user.php";
 
 
 if (isset($_GET['action']))
@@ -36,8 +40,24 @@ if (isset($_GET['action']))
           register($_POST);
           break;
 
+     case 'profil' :
+          profil();
+          break;
+
       case 'contact':
           contact();
+          break;
+
+      case 'createTravel':
+
+          if(isset($_SESSION["userId"]))
+          {
+              createTravel($_POST, $_FILES);
+          }
+          else
+          {
+              loginRegister($_POST);
+          }
           break;
 
       default :
