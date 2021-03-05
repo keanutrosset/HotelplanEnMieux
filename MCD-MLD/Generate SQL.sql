@@ -19,7 +19,7 @@ USE `hotelplanenmieux`;
 
 -- Listage de la structure de la table hotelplanenmieux. activity
 CREATE TABLE IF NOT EXISTS `activity` (
-  `ID` int(11) NOT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `description` varchar(50) NOT NULL DEFAULT '',
   `date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `price` float NOT NULL DEFAULT '0',
@@ -27,15 +27,15 @@ CREATE TABLE IF NOT EXISTS `activity` (
   `remark` text NOT NULL,
   `IDTravel` int(11) NOT NULL,
   PRIMARY KEY (`ID`),
-  KEY `FK_TravelToActivity` (`IDTravel`),
-  CONSTRAINT `FK_TravelToActivity` FOREIGN KEY (`IDTravel`) REFERENCES `travel` (`id`)
+  KEY `FK_activity_travel` (`IDTravel`),
+  CONSTRAINT `FK_activity_travel` FOREIGN KEY (`IDTravel`) REFERENCES `travel` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Les données exportées n'étaient pas sélectionnées.
 
 -- Listage de la structure de la table hotelplanenmieux. checklist
 CREATE TABLE IF NOT EXISTS `checklist` (
-  `ID` int(11) NOT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `thingsToTake` varchar(50) NOT NULL DEFAULT '',
   `thingsToDo` varchar(50) NOT NULL DEFAULT '',
   `quantity` int(11) NOT NULL DEFAULT '0',
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `checklist` (
 
 -- Listage de la structure de la table hotelplanenmieux. lodgingplace
 CREATE TABLE IF NOT EXISTS `lodgingplace` (
-  `ID` int(11) NOT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `address` varchar(50) NOT NULL DEFAULT '',
   `type` varchar(50) NOT NULL DEFAULT '',
   `departureTime` date NOT NULL DEFAULT '0000-00-00',
@@ -57,40 +57,40 @@ CREATE TABLE IF NOT EXISTS `lodgingplace` (
   `remark` text NOT NULL,
   `IDTravel` int(11) NOT NULL,
   PRIMARY KEY (`ID`),
-  KEY `FK_TravelToLodgingplace` (`IDTravel`),
-  CONSTRAINT `FK_TravelToLodgingplace` FOREIGN KEY (`IDTravel`) REFERENCES `travel` (`id`)
+  KEY `FK_lodgingplace_travel` (`IDTravel`),
+  CONSTRAINT `FK_lodgingplace_travel` FOREIGN KEY (`IDTravel`) REFERENCES `travel` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Les données exportées n'étaient pas sélectionnées.
 
 -- Listage de la structure de la table hotelplanenmieux. loguser
 CREATE TABLE IF NOT EXISTS `loguser` (
-  `ID` int(11) NOT NULL,
-  `email` varchar(50) NOT NULL DEFAULT '',
-  `passwordHash` varchar(50) NOT NULL DEFAULT '',
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
+  `passwordHash` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Les données exportées n'étaient pas sélectionnées.
 
 -- Listage de la structure de la table hotelplanenmieux. participate
 CREATE TABLE IF NOT EXISTS `participate` (
-  `ID` int(11) NOT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `userAccepted` binary(1) NOT NULL,
   `IDLoguser` int(11) NOT NULL,
   `IDTravel` int(11) NOT NULL,
   PRIMARY KEY (`ID`),
-  KEY `FK__loguser` (`IDLoguser`),
-  KEY `FK__travel` (`IDTravel`),
-  CONSTRAINT `FK__loguser` FOREIGN KEY (`IDLoguser`) REFERENCES `loguser` (`id`),
-  CONSTRAINT `FK__travel` FOREIGN KEY (`IDTravel`) REFERENCES `travel` (`id`)
+  KEY `FK_participate_loguser` (`IDLoguser`),
+  KEY `FK_participate_travel` (`IDTravel`),
+  CONSTRAINT `FK_participate_loguser` FOREIGN KEY (`IDLoguser`) REFERENCES `loguser` (`id`),
+  CONSTRAINT `FK_participate_travel` FOREIGN KEY (`IDTravel`) REFERENCES `travel` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Les données exportées n'étaient pas sélectionnées.
 
 -- Listage de la structure de la table hotelplanenmieux. transport
 CREATE TABLE IF NOT EXISTS `transport` (
-  `ID` int(11) NOT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `departurePlace` varchar(50) NOT NULL DEFAULT '',
   `arrivalPlace` varchar(50) NOT NULL DEFAULT '',
@@ -101,38 +101,38 @@ CREATE TABLE IF NOT EXISTS `transport` (
   `remark` text NOT NULL,
   `IDTravel` int(11) NOT NULL,
   PRIMARY KEY (`ID`),
-  KEY `FK_TravelToTransport` (`IDTravel`),
-  CONSTRAINT `FK_TravelToTransport` FOREIGN KEY (`IDTravel`) REFERENCES `travel` (`id`)
+  KEY `FK_transport_travel` (`IDTravel`),
+  CONSTRAINT `FK_transport_travel` FOREIGN KEY (`IDTravel`) REFERENCES `travel` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Les données exportées n'étaient pas sélectionnées.
 
 -- Listage de la structure de la table hotelplanenmieux. travel
 CREATE TABLE IF NOT EXISTS `travel` (
-  `ID` int(11) NOT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(50) NOT NULL DEFAULT '',
   `destination` varchar(50) NOT NULL DEFAULT '',
   `image` varchar(50) NOT NULL DEFAULT '',
   `isVisible` binary(1) NOT NULL,
   `IDLogUser` int(11) NOT NULL,
   PRIMARY KEY (`ID`),
-  KEY `FK_LogUserToTravel` (`IDLogUser`),
-  CONSTRAINT `FK_LogUserToTravel` FOREIGN KEY (`IDLogUser`) REFERENCES `loguser` (`id`)
+  KEY `FK_travel_loguser` (`IDLogUser`),
+  CONSTRAINT `FK_travel_loguser` FOREIGN KEY (`IDLogUser`) REFERENCES `loguser` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Les données exportées n'étaient pas sélectionnées.
 
 -- Listage de la structure de la table hotelplanenmieux. travel_checklist
 CREATE TABLE IF NOT EXISTS `travel_checklist` (
-  `ID` int(11) NOT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `isOk` binary(1) NOT NULL,
   `IDTravel` int(11) NOT NULL DEFAULT '0',
   `IDChecklist` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID`),
-  KEY `FK_Travel` (`IDTravel`),
-  KEY `FK_Checklist` (`IDChecklist`),
-  CONSTRAINT `FK_Checklist` FOREIGN KEY (`IDChecklist`) REFERENCES `checklist` (`id`),
-  CONSTRAINT `FK_Travel` FOREIGN KEY (`IDTravel`) REFERENCES `travel` (`id`)
+  KEY `FK_travel_checklist_travel` (`IDTravel`),
+  KEY `FK_travel_checklist_checklist` (`IDChecklist`),
+  CONSTRAINT `FK_travel_checklist_checklist` FOREIGN KEY (`IDChecklist`) REFERENCES `checklist` (`id`),
+  CONSTRAINT `FK_travel_checklist_travel` FOREIGN KEY (`IDTravel`) REFERENCES `travel` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Les données exportées n'étaient pas sélectionnées.
