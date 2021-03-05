@@ -24,29 +24,34 @@ ob_start();
         <div class="standing-container">
 
             <div style="text-align:center">
-                <img id="sendImage" name="Image" src="view/content/img/image-background.png" alt="">
+                <img id="sendImage" name="imageExemple" src="view/content/img/image-background.png" alt="">
             </div>
 
             <div class="standing-big-button" style="text-align:center">
                 <!--<input id="inputImage" class="btn btn-grey btn-big" type="file" onchange="document.forms['formCreation'].submit()">-->
-                <input id="inputImage" name="createImage" class="btn btn-grey btn-big" type="file">
+                <input id="inputImage" name="image" class="btn btn-grey btn-big" type="file">
             </div>
         </div>
 
         <div class="standing-container-right" style="Margin-right:50px; Margin-left:50px">
             <div class="form-group">
-                <label for="snowCode" class="standing-form-label"><strong>Titre</strong></label>
-                <input name="createTitre" class="form-control standing-form-input" type="text" placeholder="Titre">
+                <label for="travel" class="standing-form-label"><strong>Titre</strong></label>
+                <input name="title" class="form-control standing-form-input" type="text" placeholder="Titre">
             </div>
 
             <div class="form-group">
-                <label for="snowCode" class="standing-form-label"><strong>Description</strong></label>
-                <textarea name="createDescription" class="form-control standing-form-input" style="resize:none;" rows="5" type="text" placeholder="Description"></textarea>
+                <label for="travel" class="standing-form-label"><strong>Destination</strong></label>
+                <input name="destination" class="form-control standing-form-input" type="text" placeholder="Destination">
             </div>
 
             <div class="form-group">
-                <label for="snowCode" class="standing-form-label"><strong>Prix</strong></label>
-                <input name="createPrix" class="form-control standing-form-input" type="number" step="10" placeholder="Prix">
+                <label for="travel" class="standing-form-label"><strong>Description</strong></label>
+                <textarea name="description" class="form-control standing-form-input" style="resize:none;" rows="5" type="text" placeholder="Description"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="travel" class="standing-form-label"><strong>Prix</strong></label>
+                <input name="price" class="form-control standing-form-input" type="number" step="10" placeholder="Prix">
             </div>
 
             <div class="form-group">

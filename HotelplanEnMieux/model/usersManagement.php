@@ -21,7 +21,7 @@ function isLoginCorrect($email, $userPsw)
     $result = false;
 
     $strSeparator = '\'';
-    $loginQuery = 'SELECT passwordHash, id FROM loguser WHERE email = '.$strSeparator.$email.$strSeparator;
+    $loginQuery = 'SELECT passwordHash, ID FROM loguser WHERE email = '.$strSeparator.$email.$strSeparator;
 
     require_once 'model/dbConnector.php';
     $queryResult = executeQuerySelect($loginQuery);
@@ -31,13 +31,14 @@ function isLoginCorrect($email, $userPsw)
         $passwordHash = $queryResult[0]['passwordHash'];
         if(password_verify($userPsw, $passwordHash))
         {
-            $result = $queryResult[0]["id"];
+            $result = $queryResult[0]["ID"];
         }
         else
         {
             $result = false;
         }
     }
+
     return $result;
 }
 
@@ -55,25 +56,26 @@ function registerNewAccount($email, $userPsw)
 
     $strSeparator = '\'';
 
-    $passwordHash = password_hash($userPsw, PASSWORD_DEFAULT);
+    $pswHash = password_hash($userPsw, PASSWORD_DEFAULT);
 
     $registerQuery = 'INSERT INTO loguser (`email`, `passwordHash`) VALUES (:email, :password)';
-    $registerData = array(":email"=>$email,":password"=>$userPsw);
+    $registerData = array(":email"=>$email,":password"=>$pswHash);
 
     require_once 'model/dbConnector.php';
     $queryResult = executeQueryInsert($registerQuery,$registerData);
 
-    $registerQuery2 = 'SELECT id FROM loguser WHERE email = '.$strSeparator.$email.$strSeparator;
+    $registerQuery2 = 'SELECT ID FROM loguser WHERE email = '.$strSeparator.$email.$strSeparator;
 
     $queryResult2 = executeQuerySelect($registerQuery2);
 
     if($queryResult and $queryResult2){
-        $result = $queryResult2[0]["id"];
+        $result = $queryResult2[0]["ID"];
     }
     else
     {
         $result = false;
     }
+
 
     return $result;
 }

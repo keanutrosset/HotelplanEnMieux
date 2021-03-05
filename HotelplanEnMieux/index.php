@@ -56,7 +56,7 @@ if (isset($_GET['action']))
           }
           else
           {
-              loginRegister($_POST);
+              login($_POST);
           }
           break;
 
