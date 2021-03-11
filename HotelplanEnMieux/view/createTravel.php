@@ -19,7 +19,7 @@ ob_start();
     <h2 class="section-heading text-uppercase">Créer une annonce</h2>
   </div>
 
-<form method="post" id="formCreation" action="index.php?action=createTravel" enctype="multipart/form-data">
+<form method="POST" id="formCreation" action="index.php?action=toCreateATravel" enctype="multipart/form-data">
     <div class="standing-content">
         <div class="standing-container">
 
@@ -28,7 +28,6 @@ ob_start();
             </div>
 
             <div class="standing-big-button" style="text-align:center">
-                <!--<input id="inputImage" class="btn btn-grey btn-big" type="file" onchange="document.forms['formCreation'].submit()">-->
                 <input id="inputImage" name="image" class="btn btn-grey btn-big" type="file">
             </div>
         </div>
@@ -51,30 +50,29 @@ ob_start();
 
             <div class="form-group">
                 <label for="travel" class="standing-form-label"><strong>Prix</strong></label>
-                <input name="price" class="form-control standing-form-input" type="number" step="10" placeholder="Prix">
+                <input name="price" class="form-control standing-form-input" type="number" step="0.05" placeholder="Prix">
             </div>
 
             <div class="form-group">
                 <br/>
                 <H5>Types</H5>
                 <br/>
-                <div class="standing-form-checkbox-line"><input id="chkPublic" name="createType" type="radio" value="Public"><label for="chkpublic"> <b> Public</b></label></div>
-                <div class="standing-form-checkbox-line"><input id="chkPrivate" name="createType" type="radio" value="Private"><label for="chkprivate"><b> Privé</b></label></div>
+                <div class="standing-form-checkbox-line"><input id="chkPublic" name="createType" type="radio" value="0"><label for="chkPublic"> <b> Public</b></label></div>
+                <div class="standing-form-checkbox-line"><input id="chkPrivate" name="createType" type="radio" value="1"><label for="chkPrivate"><b> Privé</b></label></div>
             </div>
 
             <div class="form-group">
                 <h5>Checklist</h5>
                 <br/>
-                <span id="createList" class="custom-dropdown custom-dropdown--white">
-                    <select id="createChecklist" name="createChecklist" class="custom-dropdown__select custom-dropdown__select--grey">
-                        <option>Chaussure de marche
-                        <option>Vêtement chaud
-                        <option>Raquette de ping pong
-                        <option>Chaussettes de rechange
-                        <option>Equipement de plongée
-                        <option>Divers
-                    </select>
-                </span>
+
+                <?php foreach ($checklist as $onecheck) : ?>
+                    <div class="standing-form-checkbox-line">
+                      <input id="createChecklist<?= $onecheck["ID"]; ?>" name="createChecklist[]" type="checkbox" value="<?= $onecheck["ID"]; ?>">
+                      <label for="createChecklist<?= $onecheck["ID"]; ?>"> <b> <?= $onecheck["thingsToTake"]; ?></b></label>
+                    </div>
+                <?php endforeach ?>
+
+
             </div>
 
             <div class="standing-container-bottom" style="text-align:center">
@@ -110,7 +108,7 @@ ob_start();
 
             reader.readAsDataURL(input.files[0]);
         }else{
-            document.getElementById('sendImage').setAttribute('src', '/view/content/img/logos/image-background.png');
+            document.getElementById('sendImage').setAttribute('src', '/view/content/img/image-background.png');
             //document.getElementById('sendImage').setAttribute()
         }
     }

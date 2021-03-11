@@ -29,7 +29,7 @@ if (isset($_GET['action']))
           break;
 
       case 'login' :
-          login($_POST);
+          login($_POST, "home");
           break;
 
       case 'logout' :
@@ -52,12 +52,29 @@ if (isset($_GET['action']))
 
           if(isset($_SESSION["userId"]))
           {
-              createTravel($_POST, $_FILES);
+              createTravel();
           }
           else
           {
-              login($_POST);
+              login($_POST, "createTravel");
           }
+          break;
+
+      case 'toCreateATravel':
+
+            toCreateATravel($_POST, $_FILES);
+            break;
+
+      case 'mail':
+          contactEmail($_POST);
+          break;
+
+      case 'changeMail':
+          changeUserEmail($_POST["newMail"]);
+          break;
+
+      case 'changePassword':
+          changeUserPassword($_POST["oldPsw"],$_POST["newPsw"],$_POST["newPswBis"]);
           break;
 
       default :

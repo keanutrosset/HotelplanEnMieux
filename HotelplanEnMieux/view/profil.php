@@ -1,27 +1,30 @@
 <?php
+/**
+* Author   : keanu.trosset@cpnv.ch
+* Project  : Projet PreTPI web + DB
+* Created  : 12.02.2021
+*
+* Git source  : [https://github.com/keanutrosset/HotelplanEnMieux]
+*
+*/
 
-if(isset($_POST["profilMessage"]))
-{
-    $profilMessage = $_POST["profilMessage"];
-}
-else
-{
-    $profilMessage = 0;
-}
+$title ='HotelplanEnMieux - Profil';
 
-$titre = "HotelplanEnMieux - Profil";
 ob_start();
 
 ?>
 <div class="text-center page-section">
   <h2 class="section-heading text-uppercase">Bienvenue <?= $_SESSION["email"]; ?> !</h2>
 
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-
+  <?
+  if(isset($_POST["profilMessage"]))
+  {
+      $profilMessage = $_POST["profilMessage"];
+  }
+  else
+  {
+      $profilMessage = 0;
+  }?>
 
   <div style="text-align: center">
 
@@ -51,56 +54,53 @@ ob_start();
               <?php endif?>
           </div>
 
-          <div style="width:100%; text-align: center;">
-              <div style="">
-                  <div class="profilAnnonces">
-                      <table style="min-width: 711px; border-top: 1px solid #333">
+          <div style="text-align: center;">
+            <div class="bg-dark align-center">
+              <table style="min-width: 711px; border: 1px solid">
+                <?php if(count($vendorAds) > 0):?>
+                    <?php foreach ($vendorAds as $annonce) : ?>
+                      <?php if($annonce["isVisible"] == "0");?>
+                        <tr>
+                            <td class="text-white">
+                                <p><strong>Titre : </strong><?= $annonce['title']; ?></p>
+                            </td>
 
-                          <?php if(count($vendorAds) > 0):?>
-                              <?php foreach ($vendorAds as $annonce) : ?>
-                                  <tr>
-                                      <td class="scroll-list-box scroll-list-item">
-                                          <p><strong>Titre : </strong><?= $annonce['titre']; ?></p>
-                                      </td>
+                            <td class="text-white">
+                                <p><strong>Destination : </strong><?= $annonce['destination']; ?></p>
+                            </td>
 
-                                      <td class="scroll-list-box scroll-list-item">
-                                          <p><strong>Categorie : </strong><?= $annonce['categorie']; ?></p>
-                                      </td>
+                            <!--<td class="scroll-list-box scroll-list-item">
+                                <p><strong>Description : </strong>
+                                    <textarea class="form-control" style="resize:none;" rows="5" type="text" readonly></*?= $annonce['description']; ?>
+                                    </textarea></p>
+                            </td>
 
-                                      <td class="scroll-list-box scroll-list-item">
-                                          <p><strong>Description : </strong>
-                                              <textarea class="form-control" style="resize:none;" rows="5" type="text" readonly><?= $annonce['description']; ?>
-                                              </textarea></p>
-                                      </td>
+                            <td class="scroll-list-box scroll-list-item-little">
+                                <p><strong>Prix : <br> </strong></*?= $annonce['prix']; ?> CHF</p>
+                            </td>!-->
 
-                                      <td class="scroll-list-box scroll-list-item-little">
-                                          <p><strong>Prix : <br> </strong><?= $annonce['prix']; ?> CHF</p>
-                                      </td>
+                            <td class="scroll-list-box scroll-list-item">
+                                <a href="<?=$annonce["image"]?>"><img src="<?= $annonce['image']; ?>" alt="Annonce" height="100" width="100"></a>
+                            </td>
 
-                                      <td class="scroll-list-box scroll-list-item">
-                                          <a href="<?=$annonce["path"]?>"><img src="<?= $annonce['path']; ?>" alt="Annonce" height="100" width="100"></a>
-                                      </td>
+                            <td class="scroll-list-box scroll-list-button">
+                                <form method="post" name="formDelete" action="index.php?action=modifyAnnonce">
+                                    <button type="submit" name="fakeId" value="<?= $annonce['id']; ?>" class="btn btn-blue">M</button>
+                                </form>
+                            </td>
 
-                                      <td class="scroll-list-box scroll-list-button">
-                                          <form method="post" name="formDelete" action="index.php?action=modifyAnnonce">
-                                              <button type="submit" name="fakeId" value="<?= $annonce['id']; ?>" class="btn btn-blue">M</button>
-                                          </form>
-                                      </td>
-
-                                      <td class="scroll-list-box scroll-list-button">
-                                          <form method="post" name="formDelete" action="index.php?action=deleteAnnonce">
-                                              <button type="submit" name="fakeId" value="<?= $annonce['id']; ?>" class="btn btn-red">X</button>
-                                          </form>
-                                      </td>
-                                  </tr>
-
-                              <?php endforeach ?>
-                          <?php else:?>
-                              Vous n'avez pas d'annonces
-                          <?php endif?>
-                      </table>
-                  </div>
-              </div>
+                            <td class="scroll-list-box scroll-list-button">
+                                <form method="post" name="formDelete" action="index.php?action=deleteAnnonce">
+                                    <button type="submit" name="fakeId" value="<?= $annonce['id']; ?>" class="btn btn-red">X</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <?php endforeach ?>
+                <?php else:?>
+                    <p class="text-white">Vous n'avez pas d'annonces<p>
+                <?php endif?>
+              </table>
+            </div>
           </div>
       </section>
 
@@ -124,11 +124,6 @@ ob_start();
                           <input type="email" class="form-control" id="newMail" name="newMail" aria-describedby="pseudoHelp" placeholder="Entrez une nouvelle adresse mail" required>
                       </div>
                       <button type="submit" class="btn btn-primary">Changer Adresse Mail</button>
-                      <br>
-                      <br>
-                      <br>
-                      <br>
-                      <br>
                       <br>
                       <br>
 

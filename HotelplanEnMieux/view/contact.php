@@ -22,7 +22,7 @@ ob_start();
         <h2 class="section-heading text-uppercase">Contactez-moi</h2>
         <h3 class="section-subheading text-muted">Je repondrais au plus vite.</h3>
     </div>
-    <form id="contactForm" name="sentMessage" novalidate="novalidate">
+    <form id="contactForm" name="sentMessage" action="index.php?action=contactMail" novalidate="novalidate">
         <div class="row align-items-stretch mb-5">
             <div class="col-md-6">
                 <div class="form-group">
@@ -46,6 +46,11 @@ ob_start();
             </div>
         </div>
         <div class="text-center">
+          <?php if(isset($mailMessage)):?>
+              <div class="alert alert-success">
+                  <strong><?=$mailMessage?></strong>
+              </div>
+          <?php endif?>
             <button class="btn btn-primary btn-xl text-uppercase" id="sendMessageButton" type="submit">Envoyer le Message</button>
         </div>
     </form>

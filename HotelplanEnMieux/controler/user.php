@@ -16,18 +16,25 @@
  */
 function home($errorTitle = "", $errorMessage = "")
 {
+    require_once "model/travelsManagement.php";
+
+    $vendorAds = dataFromAllVendor();
 
     $homePageFlag = true;
     require "view/home.php";
     exit();
 }
 
+function contact(){
+  require "view/contact.php";
+  exit();
+}
 
 /**
  * This function is designed to manage login request
  * @param $loginRequest : contain login fields required to authenticate the user
  */
-function login($loginRequest)
+function login($loginRequest, $redirect)
 {
     //If a login request was submitted
     if (isset($loginRequest['inputEmail']) && isset($loginRequest['inputUserPsw']))
@@ -53,8 +60,7 @@ function login($loginRequest)
             createSession($email, $userId);
 
             $_GET['loginError'] = false;
-            $action = "home";
-            home();
+            header("Location:?action=".$redirect);
             exit();
         }
         //If the user/psw doesn't match, login form appears again
@@ -100,7 +106,7 @@ function register($registerRequest)
             }
             catch (ErrorDbAccess $e)
             {
-                home("Erreur","Notre site est en maintenance, merci pour votre compréhension");
+                home("<br><br><br><br>Erreur","Notre site est en maintenance, merci pour votre compréhension");
                 exit();
             }
 
@@ -113,8 +119,14 @@ function register($registerRequest)
                 home();
                 exit();
             }
+            else{
+              $_GET['registerError'] = true;
+              $action = "register";
+              require "view/register.php";
+              exit();
+            }
         }
-        //If submitted passwords doesn't match
+        //If submitted passwords doesn't match or email already exist
         else
         {
             $_GET['registerError'] = true;
@@ -133,8 +145,19 @@ function register($registerRequest)
 
 function profil()
 {
-  require "view/profil.php";
-  exit();
+  if(isset($_SESSION["userId"]))
+  {
+      require_once "model/travelsManagement.php";
+
+      $vendorAds = dataFromVendor($_SESSION["userId"]);
+
+      require "view/profil.php";
+  }
+  else
+  {
+      $_POST["loginMessage"] = 5;
+      require "view/login.php";
+  }
 }
 
 /**
@@ -161,4 +184,104 @@ function logout()
     $action = "home";
     home();
     exit();
+}
+
+function changeUserEmail($email)
+{
+    require_once 'model/usersManagement.php';
+    if(userModifyEmail($_SESSION["userId"],$email)){
+      $_SESSION["email"] = $email;
+
+      profil();
+    }
+    else{
+      $profilMessage = 7;
+      profil();
+    }
+
+
+}
+
+function changeUserPassword($oldPws, $newPsw,$newPswBis)
+{
+    if($newPsw == $newPswBis){
+      require_once 'model/usersManagement.php';
+
+      if(userModifyPassword($_SESSION["userId"],$oldPws,$newPsw))
+      {
+          $profilMessage = 0;
+      }
+      else
+      {
+          $profilMessage = 9;
+      }
+    }
+    else{
+      $profilMessage = 9;
+    }
+    profil();
+}
+
+
+//region Email functions
+function sendMailFunction($to, $fromName, $fromEmail, $replyName, $replyEmail, $mailObject, $mailMessage)
+{
+    $mail = $to;
+
+    if (!preg_match("#^[a-z0-9._-]+@(hotmail|live|msn).[a-z]{2,4}$#", $mail))
+    {
+        $passage_ligne = "\r\n";
+    }
+    else
+    {
+        $passage_ligne = "\n";
+    }
+
+    //=====Déclaration des messages au format texte et au format HTML.
+    $message_txt = "";
+    $message_html = "<html><body>".$mailMessage."</body></html>";
+    //==========
+
+    //=====Création de la boundary
+    $boundary = "-----=".md5(rand());
+    //==========
+
+    //=====Définition du sujet.
+    $sujet = $mailObject;
+    //=========
+
+    //=====Création du header de l'e-mail.
+    $header = "From: ".$fromName."<".$fromEmail.">".$passage_ligne;
+    $header.= "Reply-to: ".$replyName."<".$replyEmail.">".$passage_ligne;
+    $header.= "MIME-Version: 1.0".$passage_ligne;
+    $header.= "Content-Type: multipart/alternative;".$passage_ligne." boundary=\"$boundary\"".$passage_ligne;
+    //==========
+
+    //=====Création du message.
+    $message = $passage_ligne."--".$boundary.$passage_ligne;
+    //=====Ajout du message au format texte.
+    $message.= "Content-Type: text/plain; charset=\"ISO-8859-1\"".$passage_ligne;
+    $message.= "Content-Transfer-Encoding: 8bit".$passage_ligne;
+    $message.= $passage_ligne.$message_txt.$passage_ligne;
+    //==========
+    $message.= $passage_ligne."--".$boundary.$passage_ligne;
+    //=====Ajout du message au format HTML
+    $message.= "Content-Type: text/html; charset=\"ISO-8859-1\"".$passage_ligne;
+    $message.= "Content-Transfer-Encoding: 8bit".$passage_ligne;
+    $message.= $passage_ligne.$message_html.$passage_ligne;
+    //==========
+    $message.= $passage_ligne."--".$boundary."--".$passage_ligne;
+    $message.= $passage_ligne."--".$boundary."--".$passage_ligne;
+    //==========
+
+    //=====Envoi de l'e-mail.
+    mail($mail,$sujet,$message,$header);
+}
+
+function contactEmail($userInfo){
+    sendMailFunction("keanu.trosset@cpnv.ch", $userInfo["userName"], $userInfo["userEmail"], $userInfo["userName"], $userInfo["userEmail"], "Formulaire de contact", $userInfo["userMessage"]);
+
+    $mailMessage = "Le mail a été envoyé avec succès.";
+
+    require "view/Contact.php";
 }
