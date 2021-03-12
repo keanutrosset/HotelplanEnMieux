@@ -18,7 +18,7 @@ function createTravel(){
 
 function toCreateATravel($travel, $image){
 
-  if(isset($travel["title"]) && isset($travel["destination"]) && isset($travel["createType"])){
+  if(isset($travel["title"]) && isset($travel["destination"]) && isset($travel["createType"])|| $image["error"] =! 0){
 
     $correctFilesType = array("image/png", "image/jpg", "image/jpeg", "image/gif");
     print_r($image);

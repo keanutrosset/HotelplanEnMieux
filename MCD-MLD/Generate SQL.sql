@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `checklist` (
   `thingsToDo` varchar(50) NOT NULL DEFAULT '',
   `quantity` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Les données exportées n'étaient pas sélectionnées.
 
@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS `loguser` (
   `email` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
   `passwordHash` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Les données exportées n'étaient pas sélectionnées.
 
@@ -110,15 +110,15 @@ CREATE TABLE IF NOT EXISTS `transport` (
 -- Listage de la structure de la table hotelplanenmieux. travel
 CREATE TABLE IF NOT EXISTS `travel` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(50) NOT NULL DEFAULT '',
-  `destination` varchar(50) NOT NULL DEFAULT '',
-  `image` varchar(50) NOT NULL DEFAULT '',
+  `title` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
+  `destination` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
+  `image` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
   `isVisible` binary(1) NOT NULL,
   `IDLogUser` int(11) NOT NULL,
   PRIMARY KEY (`ID`),
   KEY `FK_travel_loguser` (`IDLogUser`),
   CONSTRAINT `FK_travel_loguser` FOREIGN KEY (`IDLogUser`) REFERENCES `loguser` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Les données exportées n'étaient pas sélectionnées.
 
