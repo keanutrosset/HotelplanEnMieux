@@ -17,7 +17,14 @@ ob_start();
 
 <div class="text-center page-section">
     <h2 class="section-heading text-uppercase">Créer une annonce</h2>
-  </div>
+
+
+  <?php if (@$_GET['createTravelError'] == true) :?>
+      <h5><span class="text-center" style="color:red; text-align:center;">Cette annonce est refusée</span></h5>
+  <?php endif ?>
+
+<br>
+<br>
 
 <form method="POST" id="formCreation" action="index.php?action=toCreateATravel" enctype="multipart/form-data">
     <div class="standing-content">
@@ -81,21 +88,10 @@ ob_start();
         </div>
     </div>
 </form>
+</div>
 <br>
 <script>
 
-    /*function readURL(input) {
-
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-
-            reader.onload = function(e) {
-                $('#sendImage').attr('src', e.target.result);
-            }
-
-            reader.readAsDataURL(input.files[0]);
-        }
-    }*/
     function readURL(input) {
         var url = input.value;
         var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();

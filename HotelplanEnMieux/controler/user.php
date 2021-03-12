@@ -195,7 +195,7 @@ function changeUserEmail($email)
       profil();
     }
     else{
-      $profilMessage = 7;
+      $_POST["profilMessage"] = 7;
       profil();
     }
 
@@ -209,15 +209,15 @@ function changeUserPassword($oldPws, $newPsw,$newPswBis)
 
       if(userModifyPassword($_SESSION["userId"],$oldPws,$newPsw))
       {
-          $profilMessage = 0;
+          $_POST["profilMessage"] = 0;
       }
       else
       {
-          $profilMessage = 9;
+          $_POST["profilMessage"] = 9;
       }
     }
     else{
-      $profilMessage = 9;
+      $_POST["profilMessage"] = 9;
     }
     profil();
 }

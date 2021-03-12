@@ -37,7 +37,9 @@ function createATravel($travel, $image)
     $createData = array(":title"=>$travel["title"],":destination"=>$travel["destination"],":image"=>$travel["path"],":isVisible"=>$travel["createType"], ":IDLogUser"=>$_SESSION["userId"]);
 
 
-    executeQueryInsert($createQuery,$createData);
+    $result = executeQueryInsert($createQuery,$createData);
+
+    return $result;
 
 }
 
@@ -46,7 +48,7 @@ function dataFromVendor($vendorID)
   $result = false;
 
   $strSeparator = '\'';
-  $profilQuery = 'SELECT title, destination, image, isVisible FROM travel WHERE IDLogUser = '.$strSeparator.$vendorID.$strSeparator;
+  $profilQuery = 'SELECT ID, title, destination, image, isVisible FROM travel WHERE IDLogUser = '.$strSeparator.$vendorID.$strSeparator;
 
   require_once 'model/dbConnector.php';
   $result = executeQuerySelect($profilQuery);

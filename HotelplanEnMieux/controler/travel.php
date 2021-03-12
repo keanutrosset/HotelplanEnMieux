@@ -21,6 +21,7 @@ function toCreateATravel($travel, $image){
   if(isset($travel["title"]) && isset($travel["destination"]) && isset($travel["createType"])){
 
     $correctFilesType = array("image/png", "image/jpg", "image/jpeg", "image/gif");
+    print_r($image);
       if(in_array($image['image']['type'], $correctFilesType) && $image['image']['size'] < 10000000)
       {
           do
@@ -43,11 +44,19 @@ function toCreateATravel($travel, $image){
         $travel["path"] = $testFileName;
 
         require_once "model/travelsManagement.php";
-        createATravel($travel, $image);
+        if(createATravel($travel, $image)){
 
-        $_POST["profilMessage"] = 5;
-        require "view/profil.php";
-        exit();
+          require_once "controler/user.php";
+          profil();
+          exit();
+
+        }
+        else{
+          $_GET['createTravelError'] = true;
+          createTravel();
+          exit();
+        }
+
       }
     }
 

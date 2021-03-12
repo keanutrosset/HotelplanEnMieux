@@ -70,6 +70,7 @@ ob_start();
         <div class="row">
         <?php if(count($vendorAds) > 0):?>
             <?php foreach ($vendorAds as $annonce) : ?>
+              <?php if($annonce["isVisible"] == 0):?>
 
 
                     <div class="col-lg-4 col-sm-6 mb-4">
@@ -78,7 +79,7 @@ ob_start();
                                 <div class="travel-hover">
                                     <div class="travel-hover-content"><i class="fas fa-plus "></i></div>
                                 </div>
-                                <img class="img-fluid center" style="display: block; margin-left: auto; margin-right: auto; width: 50%;" src="<?= $annonce['image']; ?>" alt="">
+                                <img class="center" style="display: block; margin-left: auto; margin-right: auto; min-height:20rem; min-width:100%; max-height:20rem; max-width:15rem;" src="<?= $annonce['image']; ?>" alt="">
                             </a>
                             <div class="travel-caption">
                                 <div class="travel-caption-heading"><?= $annonce['title']; ?></div>
@@ -118,6 +119,7 @@ ob_start();
                             </div>
                         </div>
                     </div>
+                  <?php endif?>
                     <?php endforeach ?>
               <?php else:?>
                   Aucune annonces disponible pour le moment, veuillez repassez a un autre moment de la journée.

@@ -12,19 +12,19 @@ $title ='HotelplanEnMieux - Profil';
 
 ob_start();
 
+if(isset($_POST["profilMessage"]))
+{
+    $profilMessage = $_POST["profilMessage"];
+}
+else
+{
+    $profilMessage = 0;
+}
+
 ?>
 <div class="text-center page-section">
   <h2 class="section-heading text-uppercase">Bienvenue <?= $_SESSION["email"]; ?> !</h2>
 
-  <?
-  if(isset($_POST["profilMessage"]))
-  {
-      $profilMessage = $_POST["profilMessage"];
-  }
-  else
-  {
-      $profilMessage = 0;
-  }?>
 
   <div style="text-align: center">
 
@@ -103,6 +103,8 @@ ob_start();
             </div>
           </div>
       </section>
+
+      <hr/>
 
       <section id="contentOptions" class="check-nav-content">
 

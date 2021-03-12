@@ -59,6 +59,10 @@ function userModifyEmail($idUser, $MailToModify)
 
 function userModifyPassword($idUser, $OldPsw, $NewPsw)
 {
+  $result = false;
+
+  $strSeparator = '\'';
+
   $pswVerifyQuery = 'SELECT passwordHash FROM loguser WHERE ID = '.$strSeparator.$idUser.$strSeparator;
 
   require_once 'model/dbConnector.php';
@@ -68,8 +72,8 @@ function userModifyPassword($idUser, $OldPsw, $NewPsw)
   {
       $NewPsw = password_hash($NewPsw, PASSWORD_DEFAULT);
 
-      $registerQuery = 'INSERT INTO loguser (`passwordHash`) VALUES (:password)';
-      $registerData = array(":password"=>$pswHash);
+      $registerQuery = 'UPDATE loguser SET `passwordHash` = :password WHERE ID = :id ';
+      $registerData = array(":password"=>$NewPsw, ":id"=>$idUser);
 
       $queryResult = executeQueryInsert($registerQuery,$registerData);
 
