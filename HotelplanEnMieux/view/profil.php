@@ -130,9 +130,8 @@ else
                       <br>
 
                   </form>
-              </div>
+                </div>
 
-              <div class="vertical-line"></div>
 
               <div class="block-half-page-profil">
                   <div class="message-box">
@@ -166,16 +165,43 @@ else
 
                   </form>
 
-                  <hr/>
+                <div class="block-half-page-profil">
+                    <div class="message-box">
+                        <?php if($profilMessage == 10):?>
+                            <div class="login-alert alert alert-error">
+                                <strong>Erreur</strong>
+                                <p>Le compte n'a pas pu être supprimé.</p>
+                            </div>
+                        <?php endif?>
+                    </div>
+                    <h4>Supprimer ce compte:</h4>
+                    <form method="post" id="deleteAccount" name="formRegister" action="index.php?action=deleteAccount">
+                      <button type="button" onclick="confirmDeleteAccount()" class="btn btn-primary">Supprimer définitivement ce compte?</button>
+                      <br>
+                      <br>
+                    </form>
+                </div>
 
-                  <form method="post" name="formLogout" action="index.php?action=logout">
-                      <button type="submit" class="btn btn-primary btn-xl text-uppercase">Se déconnecter</button>
-                  </form>
+                <hr/>
+
+                <form method="post" name="formLogout"  action="index.php?action=logout">
+                    <button type="submit" class="btn btn-primary btn-xl text-uppercase">Se déconnecter</button>
+                </form>
               </div>
       </section>
 
   </div>
 </div>
+
+
+<script>
+function confirmDeleteAccount() {
+  if (confirm("Cela va effacer definitivement votre compte! Voulez vous vraiment le supprimer?")) {
+    document.getElementById("deleteAccount").submit();
+  }else{
+  }
+}
+</script>
 
 <?php
 

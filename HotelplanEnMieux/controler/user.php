@@ -222,6 +222,22 @@ function changeUserPassword($oldPws, $newPsw,$newPswBis)
     profil();
 }
 
+function deleteAccount($userId){
+
+    require_once 'model/usersManagement.php';
+
+    if(deleteThisAccount($userId))
+    {
+        $_POST["profilMessage"] = 0;
+    }
+    else
+    {
+        $_POST["profilMessage"] = 10;
+    }
+
+  profil();
+
+}
 
 //region Email functions
 function sendMailFunction($to, $fromName, $fromEmail, $replyName, $replyEmail, $mailObject, $mailMessage)

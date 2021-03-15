@@ -77,6 +77,10 @@ if (isset($_GET['action']))
           changeUserPassword($_POST["oldPsw"],$_POST["newPsw"],$_POST["newPswBis"]);
           break;
 
+      case 'deleteAccount':
+          deleteAccount($_SESSION["userId"]);
+          break;
+
       default :
           home();
   }

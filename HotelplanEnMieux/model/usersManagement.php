@@ -136,62 +136,20 @@ function registerNewAccount($email, $userPsw)
 
 }
 
+function deleteThisAccount($userId){
 
-/**
- * This function is designed to get the type of user
- * For the webapp, it will adapt the behavior of the GUI
- * @param $email
- * @throws ErrorDbAccess : Raise if database connexion fail
- * @return int (1 = customer ; 2 = seller)
- */
-function getUserType($email)
-{
-    $result = 1;//we fix the result to 1 -> customer
+  $result = false;
 
-    $strSeparator = '\'';
+  $deleteAccountQuery = 'DELETE FROM loguser WHERE ID = :id';
+  $deleteAccountData = array(":id" => $userId);
 
-    $getUserTypeQuery = 'SELECT userType FROM loguser WHERE email = '.$strSeparator.$email.$strSeparator;
+  print_r("<br><br><br><br><br><br>");
+  print_r($deleteAccountData);
+  print_r($deleteAccountQuery);
 
-    require_once 'model/dbConnector.php';
-    $queryResult = executeQuerySelect($getUserTypeQuery);
+  require_once 'model/dbConnector.php';
+  $result = executeQueryInsert($deleteAccountQuery,$deleteAccountData);
 
-    if (count($queryResult) == 1){
-        $result = $queryResult[0]['userType'];
-    }
-    return $result;
-}
+  return $result;
 
-
-/**
- * This function is designed to get the id of user
- * @param $idUser
- * @throws ErrorDbAccess : Raise if database connexion fail
- * @return array
- */
-/*function getUserRents($idUser)
-{
-    require_once "model/rentsManager.php";
-
-    $result = requestUserRents($idUser);
-
-    return $result;
-}*/
-
-
-/**
- * This function is designed to get the user id
- * @param $email: the email of the current user
- * @throws ErrorDbAccess : Raise if database connexion fail
- * @return int|bool : id of the user or false if nothing found
- */
-function getUserId($email)
-{
-    $strSeparator = '\'';
-
-    $getUserIdQuery = 'SELECT id FROM loguser WHERE email = '.$strSeparator.$email.$strSeparator;
-
-    require_once 'model/dbConnector.php';
-    $queryResult = executeQuerySelect($getUserIdQuery)[0][0];
-
-    return $queryResult;
 }
