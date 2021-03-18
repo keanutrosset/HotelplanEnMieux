@@ -81,6 +81,18 @@ if (isset($_GET['action']))
           deleteAccount($_SESSION["userId"]);
           break;
 
+      case 'modifyTravel':
+          modifyTravel($_SESSION["userId"], $_POST["modify"]);
+          break;
+
+      case 'toModifyThisTravel':
+          toModifyThisTravel($_SESSION["userId"],$_POST);
+          break;
+
+      case 'deleteTravel':
+          deleteTravel($_POST);
+          break;
+
       default :
           home();
   }

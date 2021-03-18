@@ -69,9 +69,9 @@ function openDBConnexion()
     $hostname = 'localhost';
     $port = 3306;
     $charset = 'utf8';
-    $dbName = 'hotelplanenmieux';
-    $userName = 'TPIuser';
-    $userPwd = 'Pa$$w0rd';
+    $dbName = 'hpmieux21_hpm';
+    $userName = 'hpmieux21_hpm';
+    $userPwd = 'HPMieux-21';
     $dsn = $sqlDriver . ':host=' . $hostname . ';dbname=' . $dbName . ';port=' . $port . ';charset=' . $charset;
 
     try

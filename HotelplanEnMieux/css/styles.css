@@ -542,6 +542,26 @@ mark,
   font-size: 90%;
   text-transform: uppercase;
 }
+.formlist {
+  width: 80%;
+  margin-left: 10%;
+  margin-bottom: 10px;
+
+  border: 1px solid black;
+
+  background-color: white;
+}
+.formlist td {
+  border: 1px solid black;
+
+  text-align: center;
+}
+
+.formlist select {
+  width: 90%;
+
+  margin-top: 4px;
+}
 
 .blockquote {
   margin-bottom: 1rem;

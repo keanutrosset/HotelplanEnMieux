@@ -58,40 +58,40 @@ else
             <div class="bg-dark align-center">
               <table style="min-width: 711px; border: 1px solid">
                 <?php if(count($vendorAds) > 0):?>
-                    <?php foreach ($vendorAds as $annonce) : ?>
-                      <?php if($annonce["isVisible"] == "0");?>
-                        <tr>
+                    <?php foreach ($vendorAds as $travel) : ?>
+                      <?php if($travel["isVisible"] == "0");?>
+                        <tr style="border: 1px solid yellow">
                             <td class="text-white">
-                                <p><strong>Titre : </strong><?= $annonce['title']; ?></p>
+                                <p><strong>Titre : </strong><?= $travel['title']; ?></p>
                             </td>
 
                             <td class="text-white">
-                                <p><strong>Destination : </strong><?= $annonce['destination']; ?></p>
+                                <p><strong>Destination : </strong><?= $travel['destination']; ?></p>
                             </td>
 
                             <!--<td class="scroll-list-box scroll-list-item">
                                 <p><strong>Description : </strong>
-                                    <textarea class="form-control" style="resize:none;" rows="5" type="text" readonly></*?= $annonce['description']; ?>
+                                    <textarea class="form-control" style="resize:none;" rows="5" type="text" readonly></*?= $travel['description']; ?>
                                     </textarea></p>
                             </td>
 
                             <td class="scroll-list-box scroll-list-item-little">
-                                <p><strong>Prix : <br> </strong></*?= $annonce['prix']; ?> CHF</p>
+                                <p><strong>Prix : <br> </strong></*?= $travel['prix']; ?> CHF</p>
                             </td>!-->
 
                             <td class="scroll-list-box scroll-list-item">
-                                <a href="<?=$annonce["image"]?>"><img src="<?= $annonce['image']; ?>" alt="Annonce" height="100" width="100"></a>
+                                <a href="<?=$annonce["image"]?>"><img src="<?= $travel['image']; ?>" alt="Annonce" height="100" width="100"></a>
                             </td>
 
                             <td class="scroll-list-box scroll-list-button">
-                                <form method="post" name="formDelete" action="index.php?action=modifyAnnonce">
-                                    <button type="submit" name="fakeId" value="<?= $annonce['id']; ?>" class="btn btn-blue">M</button>
+                                <form method="post" name="formDelete" action="index.php?action=modifyTravel">
+                                    <button type="submit" name="modify" value="<?= $travel['ID']; ?>" class="btn btn-blue">M</button>
                                 </form>
                             </td>
 
                             <td class="scroll-list-box scroll-list-button">
-                                <form method="post" name="formDelete" action="index.php?action=deleteAnnonce">
-                                    <button type="submit" name="fakeId" value="<?= $annonce['id']; ?>" class="btn btn-red">X</button>
+                                <form method="post" name="formDelete" action="index.php?action=deleteTravel">
+                                    <button type="submit" name="delete" value="<?= $travel['ID']; ?>" class="btn btn-red">X</button>
                                 </form>
                             </td>
                         </tr>

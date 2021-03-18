@@ -31,53 +31,42 @@ ob_start();
         <div class="standing-container">
 
             <div style="text-align:center">
-                <img id="sendImage" name="imageExemple" src="view/content/img/image-background.png" alt="">
+                <img id="sendImage" name="imageExemple" src="view/content/img/image-background.png" alt="" style="max-width: 30em; max-height: 30em; ">
             </div>
 
             <div class="standing-big-button" style="text-align:center">
-                <input id="inputImage" name="image" class="btn btn-grey btn-big" type="file">
+                <input id="inputImage" name="image" class="btn btn-grey btn-big" type="file" >
             </div>
         </div>
 
         <div class="standing-container-right" style="Margin-right:50px; Margin-left:50px">
             <div class="form-group">
                 <label for="travel" class="standing-form-label"><strong>Titre</strong></label>
-                <input name="title" class="form-control standing-form-input" type="text" placeholder="Titre">
+                <input name="title" class="form-control standing-form-input" type="text" placeholder="Titre" required>
             </div>
 
             <div class="form-group">
                 <label for="travel" class="standing-form-label"><strong>Destination</strong></label>
-                <input name="destination" class="form-control standing-form-input" type="text" placeholder="Destination">
+                <input name="destination" class="form-control standing-form-input" type="text" placeholder="Destination" required>
             </div>
 
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label for="travel" class="standing-form-label"><strong>Description</strong></label>
-                <textarea name="description" class="form-control standing-form-input" style="resize:none;" rows="5" type="text" placeholder="Description"></textarea>
+                <textarea name="description" class="form-control standing-form-input" style="resize:none;" rows="5" type="text" placeholder="Description" required></textarea>
             </div>
 
             <div class="form-group">
                 <label for="travel" class="standing-form-label"><strong>Prix</strong></label>
-                <input name="price" class="form-control standing-form-input" type="number" step="0.05" placeholder="Prix">
-            </div>
+                <input name="price" class="form-control standing-form-input" type="number" step="0.05" placeholder="Prix" required>
+            </div> -->
 
             <div class="form-group">
                 <br/>
                 <H5>Types</H5>
                 <br/>
-                <div class="standing-form-checkbox-line"><input id="chkPublic" name="createType" type="radio" value="0"><label for="chkPublic"> <b> Public</b></label></div>
-                <div class="standing-form-checkbox-line"><input id="chkPrivate" name="createType" type="radio" value="1"><label for="chkPrivate"><b> Privé</b></label></div>
+                <div class="standing-form-checkbox-line"><input id="chkPublic" name="createType" type="radio" value="0"><label for="chkPublic" required> <b> Public</b></label></div>
+                <div class="standing-form-checkbox-line"><input id="chkPrivate" name="createType" type="radio" checked value="1"><label for="chkPrivate" required><b> Privé</b></label></div>
             </div>
-
-            <div class="form-group">
-                <h5>Checklist</h5>
-                <br/>
-
-                <?php foreach ($checklist as $onecheck) : ?>
-                    <div class="standing-form-checkbox-line">
-                      <input id="createChecklist<?= $onecheck["ID"]; ?>" name="createChecklist[]" type="checkbox" value="<?= $onecheck["ID"]; ?>">
-                      <label for="createChecklist<?= $onecheck["ID"]; ?>"> <b> <?= $onecheck["thingsToTake"]; ?></b></label>
-                    </div>
-                <?php endforeach ?>
 
 
             </div>

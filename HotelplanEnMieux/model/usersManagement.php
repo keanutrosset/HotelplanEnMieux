@@ -51,7 +51,7 @@ function userModifyEmail($idUser, $MailToModify)
   $mailToModifyData = array(":email"=>$MailToModify, ":id" => $idUser);
 
   require_once 'model/dbConnector.php';
-  $queryResult = executeQueryInsert($mailToModifyQuery,$mailToModifyData);
+  $result = executeQueryInsert($mailToModifyQuery,$mailToModifyData);
 
   return $result;
 
