@@ -31,7 +31,7 @@ ob_start();
         <div class="standing-container">
 
             <div style="text-align:center">
-                <img id="sendImage" name="imageExemple" src="view/content/img/image-background.png" alt="" style="max-width: 30em; max-height: 30em;">
+                <img id="sendImage" name="imageExemple" src="<?= $travel['image']; ?>" alt="" style="max-width: 30em; max-height: 30em;">
             </div>
 
             <div class="standing-big-button" style="text-align:center">
@@ -83,7 +83,7 @@ ob_start();
 
                 <?php foreach ($checklist as $onecheck) : ?>
                     <div class="standing-form-checkbox-line">
-                      <input id="createChecklist<?= $onecheck["ID"]; ?>" name="createChecklist[]" type="checkbox" <?= $checklist["isVisible"] == 0 ? "checked=True" : "" ?>
+                      <input id="createChecklist<?= $onecheck["ID"]; ?>" name="createChecklist[]" type="checkbox" <?= in_array($checklist["ID"], $checklistSelected["IDChecklist"]) ? "checked=True" : "" ?>
                       value="<?= $onecheck["ID"]; ?>">
                       <label for="createChecklist<?= $onecheck["ID"]; ?>"> <b> <?= $onecheck["thingsToTake"]; ?></b></label>
                     </div>

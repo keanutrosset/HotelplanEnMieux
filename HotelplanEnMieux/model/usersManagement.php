@@ -143,10 +143,6 @@ function deleteThisAccount($userId){
   $deleteAccountQuery = 'DELETE FROM loguser WHERE ID = :id';
   $deleteAccountData = array(":id" => $userId);
 
-  print_r("<br><br><br><br><br><br>");
-  print_r($deleteAccountData);
-  print_r($deleteAccountQuery);
-
   require_once 'model/dbConnector.php';
   $result = executeQueryInsert($deleteAccountQuery,$deleteAccountData);
 

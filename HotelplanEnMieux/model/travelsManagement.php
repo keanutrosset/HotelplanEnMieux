@@ -16,15 +16,32 @@ function checklistReturn(){
 
   $result = executeQuerySelect($checklistQuery);
 
+  /*SELECT * FROM (SELECT * FROM travel_checklist WHERE IDTravel = 34) AS USER_CHECKLIST
+RIGHT JOIN checklist ON checklist.ID = USER_CHECKLIST.IDChecklist*/
+
+
   return $result;
 
 }
+
+/*function checklistSelectedReturn($travelID){
+
+  $strSeparator = '\'';
+
+  $checklistSelectedQuery = 'SELECT IDChecklist FROM travel_checklist WHERE IDTravel = '.$strSeparator.$travelID.$strSeparator;
+
+  require_once 'model/dbConnector.php';
+
+  $result = executeQuerySelect($checklistSelectedQuery);
+
+  return $result;
+}*/
 
 function activityReturn($travelID){
 
   $strSeparator = '\'';
 
-  $activityQuery = 'SELECT ID, description, date, price, hypertextLink, remark FROM travel WHERE IDTravel =' .$strSeparator.$travelID.$strSeparator;;
+  $activityQuery = 'SELECT ID, description, date, price, hypertextLink, remark FROM travel WHERE IDTravel =' .$strSeparator.$travelID.$strSeparator;
 
   require_once 'model/dbConnector.php';
 
@@ -62,6 +79,7 @@ function createATravel($travel, $image)
 
 function modifyATravel($travel, $image, $userID){
 
+  //Section update du voyage
   require_once 'model/dbConnector.php';
 
   /*
@@ -69,18 +87,44 @@ function modifyATravel($travel, $image, $userID){
   $endDate = date("Y-m-d", strtotime($actDate. ' + '.$oneSnow["nbD"].' days'));
   */
 
-  $createQuery = 'INSERT INTO travel (`title`, `destination`, `image`, `isVisible`, `IDLogUser`) VALUES (:title, :destination, :image, :isVisible, :IDLogUser)';
-  $createData = array(":title"=>$travel["title"],":destination"=>$travel["destination"],":image"=>$travel["path"],":isVisible"=>$travel["createType"], ":IDLogUser"=>$_SESSION["userId"]);
+  $modifyQuery = 'UPDATE travel SET `title` = :title, `destination`= :destination, `image`= :image, `isVisible`= :isVisible, `IDLogUser`= :IDLogUser WHERE ID = :id';
+  $modifyData = array(":title"=>$travel["title"],":destination"=>$travel["destination"],":image"=>$travel["path"],":isVisible"=>$travel["createType"], ":IDLogUser"=>$_SESSION["userId"], ":id"=>$travel["travelID"]);
 
 
-  $result = executeQueryInsert($createQuery,$createData);
+  $result = executeQueryInsert($modifyQuery,$modifyData);
+
+
+  //Section create/update Checklist
+  $resultCheck = false;
+
+  $deleteChecklistQuery = 'DELETE FROM travel_checklist WHERE ID = :id';
+  $deleteChecklistData = array(":id" => $travel["travelID"]);
+
+  require_once 'model/dbConnector.php';
+  $result = executeQueryInsert($deleteChecklistQuery,$deleteChecklistData);
 
   foreach($travel["createChecklist"] as $thisChecklist){
-    $createChecklistData ='INSERT INTO travel_checklist (`IDTravel`, `IDChecklist`) VALUES(:IDTravel, :IDChecklist)';
-    $createChecklistData = array(":IDTravel"=>$travelID,":IDChecklist"=>$thisChecklist);
+    $createChecklistQuery ='INSERT INTO travel_checklist (`IDTravel`, `IDChecklist`) VALUES(:IDTravel, :IDChecklist)';
+    $createChecklistData = array(":IDTravel"=>$travel["travelID"],":IDChecklist"=>$thisChecklist);
 
-    $resultCheck = executeQueryInsert($createChecklistData,$createChecklistData);
+    $resultCheck = executeQueryInsert($createChecklistQuery,$createChecklistData);
   }
+
+  return $result;
+}
+
+function deleteATravel($travelID){
+
+  $result = false;
+
+  print_r("<br><br><br><br>");
+  print_r($travelID);
+
+  $deleteATravelQuery = 'DELETE FROM travel WHERE ID = :id';
+  $deleteATravelData = array(":id" => $travelID);
+
+  require_once 'model/dbConnector.php';
+  $result = executeQueryInsert($deleteATravelQuery,$deleteATravelData);
 
   return $result;
 }

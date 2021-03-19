@@ -86,7 +86,7 @@ if (isset($_GET['action']))
           break;
 
       case 'toModifyThisTravel':
-          toModifyThisTravel($_SESSION["userId"],$_POST);
+          toModifyThisTravel($_SESSION["userId"],$_POST, $_FILES, $_SESSION["travelID"]);
           break;
 
       case 'deleteTravel':
