@@ -8,23 +8,26 @@
  *
  */
 
-function checklistReturn(){
+function checklistReturn($travelID){
 
-  $checklistQuery = 'SELECT ID, thingsToTake FROM checklist';
+  /*$checklistQuery = 'SELECT ID, thingsToTake FROM checklist';*/
+
+  $checklistQuery = 'SELECT * FROM (SELECT * FROM travel_checklist WHERE IDTravel = '.$travelID.') AS USER_CHECKLIST
+  RIGHT JOIN checklist ON checklist.ID = USER_CHECKLIST.IDChecklist';
 
   require_once 'model/dbConnector.php';
 
   $result = executeQuerySelect($checklistQuery);
 
   /*SELECT * FROM (SELECT * FROM travel_checklist WHERE IDTravel = 34) AS USER_CHECKLIST
-RIGHT JOIN checklist ON checklist.ID = USER_CHECKLIST.IDChecklist*/
+  RIGHT JOIN checklist ON checklist.ID = USER_CHECKLIST.IDChecklist*/
 
 
   return $result;
 
 }
 
-/*function checklistSelectedReturn($travelID){
+function checklistSelectedReturn($travelID){
 
   $strSeparator = '\'';
 
@@ -35,7 +38,7 @@ RIGHT JOIN checklist ON checklist.ID = USER_CHECKLIST.IDChecklist*/
   $result = executeQuerySelect($checklistSelectedQuery);
 
   return $result;
-}*/
+}
 
 function activityReturn($travelID){
 
@@ -86,9 +89,14 @@ function modifyATravel($travel, $image, $userID){
   $actDate = date("Y-m-d");
   $endDate = date("Y-m-d", strtotime($actDate. ' + '.$oneSnow["nbD"].' days'));
   */
-
-  $modifyQuery = 'UPDATE travel SET `title` = :title, `destination`= :destination, `image`= :image, `isVisible`= :isVisible, `IDLogUser`= :IDLogUser WHERE ID = :id';
-  $modifyData = array(":title"=>$travel["title"],":destination"=>$travel["destination"],":image"=>$travel["path"],":isVisible"=>$travel["createType"], ":IDLogUser"=>$_SESSION["userId"], ":id"=>$travel["travelID"]);
+  if(isset($travel["path"])){
+    $modifyQuery = 'UPDATE travel SET `title` = :title, `destination`= :destination, `image`= :image, `isVisible`= :isVisible, `IDLogUser`= :IDLogUser WHERE ID = :id';
+    $modifyData = array(":title"=>$travel["title"],":destination"=>$travel["destination"],":image"=>$travel["path"],":isVisible"=>$travel["createType"], ":IDLogUser"=>$_SESSION["userId"], ":id"=>$travel["travelID"]);
+  }
+  else{
+    $modifyQuery = 'UPDATE travel SET `title` = :title, `destination`= :destination, `isVisible`= :isVisible, `IDLogUser`= :IDLogUser WHERE ID = :id';
+    $modifyData = array(":title"=>$travel["title"],":destination"=>$travel["destination"],":isVisible"=>$travel["createType"], ":IDLogUser"=>$_SESSION["userId"], ":id"=>$travel["travelID"]);
+  }
 
 
   $result = executeQueryInsert($modifyQuery,$modifyData);
@@ -97,7 +105,7 @@ function modifyATravel($travel, $image, $userID){
   //Section create/update Checklist
   $resultCheck = false;
 
-  $deleteChecklistQuery = 'DELETE FROM travel_checklist WHERE ID = :id';
+  $deleteChecklistQuery = 'DELETE FROM travel_checklist WHERE IDTravel = :id';
   $deleteChecklistData = array(":id" => $travel["travelID"]);
 
   require_once 'model/dbConnector.php';
@@ -129,6 +137,56 @@ function deleteATravel($travelID){
   return $result;
 }
 
+function participateToATravel($userID,$travelID){
+
+  $result = false;
+
+  $participateToATravelQuery = 'INSERT INTO participate (`userAccepted`, `IDLoguser`, `IDTravel`) VALUES(:userAccepted, :IDLoguser, :IDTravel)';
+  $participateToATravelData = array("userAccepted"=>'',"IDLoguser"=>$userID ,":IDTravel"=>$travelID);
+
+  require_once 'model/dbConnector.php';
+  $result = executeQueryInsert($participateToATravelQuery,$participateToATravelData);
+
+  return $result;
+
+}
+
+function myparticipateTravel($userID){
+  $result = false;
+
+  $strSeparator = '\'';
+  $oneTravelQuery = 'SELECT travel.ID AS travelID, travel.IDLogUser, title, destination, image, loguser.email, participate.userAccepted, participate.ID AS participateID
+  FROM travel INNER JOIN participate ON travel.ID = participate.IDTravel
+  INNER JOIN loguser ON participate.IDLoguser = loguser.ID
+  WHERE userAccepted IS NOT NULL AND participate.IDLoguser = '.$strSeparator.$userID.$strSeparator.'OR travel.IDLogUser = '.$strSeparator.$userID.$strSeparator;
+
+  require_once 'model/dbConnector.php';
+  $result = executeQuerySelect($oneTravelQuery);
+
+  return $result;
+}
+
+function acceptAParticipation($participateID){
+  $acceptQuery = 'UPDATE participate SET `userAccepted` = :userAccepted  WHERE ID = :id';
+  $acceptData = array(":userAccepted"=>"1", ":id"=>$participateID);
+
+  require_once 'model/dbConnector.php';
+  $result = executeQueryInsert($acceptQuery,$acceptData);
+
+  return $result;
+
+}
+
+function dontAcceptAParticipation($participateID){
+  $dontAcceptQuery = 'DELETE FROM participate WHERE ID = :id';
+  $dontAcceptData = array(":id"=>$participateID);
+
+  require_once 'model/dbConnector.php';
+  $result = executeQueryInsert($dontAcceptQuery,$dontAcceptData);
+
+  return $result;
+}
+
 function dataFromOneTravel($vendorID, $travelID){
   $result = false;
 
@@ -137,10 +195,10 @@ function dataFromOneTravel($vendorID, $travelID){
   WHERE IDLogUser = '.$strSeparator.$vendorID.$strSeparator.'AND ID = '.$strSeparator.$travelID.$strSeparator;
 
   require_once 'model/dbConnector.php';
-  $result = executeQuerySelect($oneTravelQuery)[0];
+  $result = executeQuerySelect($oneTravelQuery);
 
 
-  return $result;
+  return $result[0];
 
 }
 

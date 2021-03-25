@@ -26,7 +26,7 @@ ob_start();
 <br>
 <br>
 
-<form method="POST" id="formCreation" action="index.php?action=toCreateATravel" enctype="multipart/form-data">
+<form method="POST" id="formCreation" action="/?action=toCreateATravel" enctype="multipart/form-data">
     <div class="standing-content">
         <div class="standing-container">
 

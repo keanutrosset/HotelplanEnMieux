@@ -22,15 +22,15 @@ ob_start();
         <h2 class="section-heading text-uppercase">Contactez-moi</h2>
         <h3 class="section-subheading text-muted">Je repondrais au plus vite.</h3>
     </div>
-    <form id="contactForm" name="sentMessage" action="index.php?action=contactMail" novalidate="novalidate">
+    <form id="contactForm" name="sentMessage" action="/?action=contactMail" novalidate="novalidate">
         <div class="row align-items-stretch mb-5">
             <div class="col-md-6">
                 <div class="form-group">
-                    <input class="form-control" id="name" type="text" placeholder="Votre Nom *" required="required" data-validation-required-message="S'il vous plaît, entrez votre nom." />
+                    <input class="form-control" name="fromName" id="name" type="text" placeholder="Votre Nom *" required="required" data-validation-required-message="S'il vous plaît, entrez votre nom." />
                     <p class="help-block text-danger"></p>
                 </div>
                 <div class="form-group">
-                    <input class="form-control" id="email" type="email" placeholder="Votre Email *" required="required" data-validation-required-message="S'il vous plaît, entrez votre email." />
+                    <input class="form-control" id="email" name="fromEmail" type="email" placeholder="Votre Email *" required="required" data-validation-required-message="S'il vous plaît, entrez votre email." />
                     <p class="help-block text-danger"></p>
                 </div>
                 <div class="form-group mb-md-0">
@@ -40,7 +40,7 @@ ob_start();
             </div>
             <div class="col-md-6">
                 <div class="form-group form-group-textarea mb-md-0">
-                    <textarea class="form-control" id="message" placeholder="Votre Message *" required="required" data-validation-required-message="S'il vous plaît, entrez votre message."></textarea>
+                    <textarea class="form-control" id="message" name="mailMessage" placeholder="Votre Message *" required="required" data-validation-required-message="S'il vous plaît, entrez votre message."></textarea>
                     <p class="help-block text-danger"></p>
                 </div>
             </div>

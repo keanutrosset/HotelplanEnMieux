@@ -93,6 +93,21 @@ if (isset($_GET['action']))
           deleteTravel($_POST);
           break;
 
+      case 'participate':
+          participate($_SESSION["userId"],$_POST["participate"]);
+          break;
+
+      case 'myTravelHistory':
+          myTravelHistory($_SESSION["userId"]);
+          break;
+
+      case 'acceptAUser':
+          acceptAUser($_POST["accept"]);
+          break;
+
+      case 'dontAcceptAUser':
+          dontAcceptAUser($_POST["dontAccept"]);
+
       default :
           home();
   }

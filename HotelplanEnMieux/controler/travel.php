@@ -67,45 +67,43 @@ function toCreateATravel($travel, $image){
 
     $travel = dataFromOneTravel($userID, $travelID);
 
-    $checklist = checklistReturn();
+    $checklist = checklistReturn($travelID);
 
-    $checklistSelected = checklistSelectedReturn($travelID);
+    $checklistSelected = array_column(checklistSelectedReturn($travelID), "IDChecklist");
 
     $activity = activityReturn($travelID);
 
     $_SESSION["travelID"] = $travelID;
 
-    print_r("<br><br><br><br>");
-    print_r($checklist);
-    print_r($checklistSelected);
-    print_r($travelID);
-
     require "view/modifyTravel.php";
     exit();
   }
   function toModifyThisTravel($userID, $travelToModify, $imageToModify, $travelID){
-    if(isset($travelToModify["title"]) && isset($travelToModify["destination"]) && isset($travelToModify["createType"])|| $imageToModify["error"] != 0){
-      $correctFilesType = array("image/png", "image/jpg", "image/jpeg", "image/gif");
-        if(in_array($imageToModify['image']['type'], $correctFilesType) && $imageToModify['image']['size'] < 10000000)
-        {
-            do
-            {
-                $testFileName = "view/content/img/".md5(uniqid(rand(), true)).".".substr($imageToModify['image']['type'], strrpos($imageToModify['image']['type'], '/')+1);
+    if(isset($travelToModify["title"]) && isset($travelToModify["destination"]) && isset($travelToModify["createType"])){
+      if(isset($imageToModify)|| $imageToModify["error"] != 0){
+        $correctFilesType = array("image/png", "image/jpg", "image/jpeg", "image/gif");
+          if(in_array($imageToModify['image']['type'], $correctFilesType) && $imageToModify['image']['size'] < 10000000)
+          {
+              do
+              {
+                  $testFileName = "view/content/img/".md5(uniqid(rand(), true)).".".substr($imageToModify['image']['type'], strrpos($imageToModify['image']['type'], '/')+1);
 
-                if(file_exists($testFileName))
-                {
-                    continue;
-                }
-                else
-                {
-                    break;
-                }
-            }
-            while(true);
+                  if(file_exists($testFileName))
+                  {
+                      continue;
+                  }
+                  else
+                  {
+                      break;
+                  }
+              }
+              while(true);
 
-          move_uploaded_file($imageToModify['image']['tmp_name'], $testFileName);
+            move_uploaded_file($imageToModify['image']['tmp_name'], $testFileName);
 
-          $travelToModify["path"] = $testFileName;
+            $travelToModify["path"] = $testFileName;
+      }
+
           $travelToModify["travelID"] = $travelID;
 
           unset($_SESSION["travelID"]);
@@ -119,7 +117,7 @@ function toCreateATravel($travel, $image){
           }
           else{
             $_GET['modifyTravelError'] = true;
-            modifyTravel();
+            header("Location:?action=modifyTravel");
             exit();
           }
 
@@ -127,11 +125,9 @@ function toCreateATravel($travel, $image){
       }
     }
 
-      function deleteTravel($travelID){
+    function deleteTravel($travelID){
 
         require_once "model/travelsManagement.php";
-        print_r("<br><br><br><br>");
-        print_r($travelID);
         if(deleteATravel($travelID["delete"])){
           $_POST["profilMessage"] = 0;
 
@@ -141,6 +137,29 @@ function toCreateATravel($travel, $image){
         else{
           $_POST["profilMessage"] = 1;
         }
+    }
+
+    function acceptAUser($participateID){
+
+      require_once "model/travelsManagement.php";
+      if(acceptAParticipation($participateID)){
+        header("Location:?action=myTravelHistory");
+        exit();
+      }
+      else{
+
+      }
+
+    }
+
+    function dontAcceptAUser($participateID){
+
+      require_once "model/travelsManagement.php";
+      if(dontAcceptAParticipation($participateID)){
+        header("Location:?action=myTravelHistory");
+        exit();
+      }
+
     }
 
 

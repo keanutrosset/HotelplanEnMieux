@@ -52,7 +52,7 @@ ob_start();
           </div>
       </form>
       <div class="container signin" style="margin-top:50px">
-          <h5 class="section-subheading text-muted">Déjà membre ? <a href="index.php?action=login">Login</a></h5>
+          <h5 class="section-subheading text-muted">Déjà membre ? <a href="/?action=login">Login</a></h5>
       </div>
   </article>
 </div>

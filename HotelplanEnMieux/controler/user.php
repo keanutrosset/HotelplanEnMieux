@@ -29,6 +29,21 @@ function contact(){
   require "view/contact.php";
   exit();
 }
+function myTravelHistory($userID){
+  if(isset($_SESSION["userId"]))
+  {
+      require_once "model/travelsManagement.php";
+
+      $myparticipateTravel = myparticipateTravel($userID);
+
+      require "view/myTravel.php";
+  }
+  else
+  {
+      $_POST["loginMessage"] = 0;
+      require "view/login.php";
+  }
+}
 
 /**
  * This function is designed to manage login request
@@ -229,20 +244,44 @@ function deleteAccount($userId){
     if(deleteThisAccount($userId))
     {
         $_POST["profilMessage"] = 0;
+        unset($_SESSION["userId"]);
+        home();
     }
     else
     {
         $_POST["profilMessage"] = 10;
+        profil();
     }
 
-  profil();
+}
+
+function participate($userID,$travelID){
+
+  require_once 'model/usersManagement.php';
+
+  if(isset($_SESSION["userId"]))
+  {
+      require_once "model/travelsManagement.php";
+
+      participateToATravel($userID,$travelID);
+
+      $myparticipateTravel = myparticipateTravel($userID);
+
+      header("Location:?action=myTravelHistory");
+      exit();
+  }
+  else
+  {
+      $_POST["loginMessage"] = 5;
+      require "view/login.php";
+  }
 
 }
 
 //region Email functions
-function sendMailFunction($to, $fromName, $fromEmail, $replyName, $replyEmail, $mailObject, $mailMessage)
+function sendMailFunction($emailInfo, $mailObject, $mail)
 {
-    $mail = $to;
+  //$to, $fromName, $fromEmail, $replyName, $replyEmail, $mailObject, $mailMessage
 
     if (!preg_match("#^[a-z0-9._-]+@(hotmail|live|msn).[a-z]{2,4}$#", $mail))
     {
@@ -255,7 +294,7 @@ function sendMailFunction($to, $fromName, $fromEmail, $replyName, $replyEmail, $
 
     //=====Déclaration des messages au format texte et au format HTML.
     $message_txt = "";
-    $message_html = "<html><body>".$mailMessage."</body></html>";
+    $message_html = "<html><body>".$emailInfo["mailMessage"]."</body></html>";
     //==========
 
     //=====Création de la boundary
@@ -267,7 +306,7 @@ function sendMailFunction($to, $fromName, $fromEmail, $replyName, $replyEmail, $
     //=========
 
     //=====Création du header de l'e-mail.
-    $header = "From: ".$fromName."<".$fromEmail.">".$passage_ligne;
+    $header = "From: ".$emailInfo["fromName"]."<".$emailInfo["fromEmail"].">".$passage_ligne;
     $header.= "Reply-to: ".$replyName."<".$replyEmail.">".$passage_ligne;
     $header.= "MIME-Version: 1.0".$passage_ligne;
     $header.= "Content-Type: multipart/alternative;".$passage_ligne." boundary=\"$boundary\"".$passage_ligne;
@@ -297,7 +336,8 @@ function sendMailFunction($to, $fromName, $fromEmail, $replyName, $replyEmail, $
 function contactEmail($userInfo){
     sendMailFunction("keanu.trosset@cpnv.ch", $userInfo["userName"], $userInfo["userEmail"], $userInfo["userName"], $userInfo["userEmail"], "Formulaire de contact", $userInfo["userMessage"]);
 
-    $mailMessage = "Le mail a été envoyé avec succès.";
+    $mailObject = "HotelplanEnMieux - ContactForm";
+    $mail = "keanu.trosset@cpnv.ch";
 
     require "view/Contact.php";
 }

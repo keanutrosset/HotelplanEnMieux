@@ -34,7 +34,7 @@ ob_start();
           </div>
       </form>
     <div class="container signin" style="margin-top:50px">
-        <h5 class="text-muted">Besoin d'un compte ? <a href="index.php?action=register">Register</a></h5>
+        <h5 class="text-muted">Besoin d'un compte ? <a href="/?action=register">Register</a></h5>
     </div>
 </article>
 </div>

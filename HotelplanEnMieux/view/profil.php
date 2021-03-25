@@ -25,10 +25,11 @@ else
 <div class="text-center page-section">
   <h2 class="section-heading text-uppercase">Bienvenue <?= $_SESSION["email"]; ?> !</h2>
 
+  <hr/>
 
   <div style="text-align: center">
 
-      <section id="contentAnnonces" class="check-nav-content">
+      <section id="$errorMessage" class="check-nav-content">
 
           <div class="message-box">
               <?php if($profilMessage == 1):?>
@@ -53,56 +54,55 @@ else
                   </div>
               <?php endif?>
           </div>
-
-          <div style="text-align: center;">
-            <div class="bg-dark align-center">
-              <table style="min-width: 711px; border: 1px solid">
-                <?php if(count($vendorAds) > 0):?>
-                    <?php foreach ($vendorAds as $travel) : ?>
-                      <?php if($travel["isVisible"] == "0");?>
-                        <tr style="border: 1px solid yellow">
-                            <td class="text-white">
-                                <p><strong>Titre : </strong><?= $travel['title']; ?></p>
-                            </td>
-
-                            <td class="text-white">
-                                <p><strong>Destination : </strong><?= $travel['destination']; ?></p>
-                            </td>
-
-                            <!--<td class="scroll-list-box scroll-list-item">
-                                <p><strong>Description : </strong>
-                                    <textarea class="form-control" style="resize:none;" rows="5" type="text" readonly></*?= $travel['description']; ?>
-                                    </textarea></p>
-                            </td>
-
-                            <td class="scroll-list-box scroll-list-item-little">
-                                <p><strong>Prix : <br> </strong></*?= $travel['prix']; ?> CHF</p>
-                            </td>!-->
-
-                            <td class="scroll-list-box scroll-list-item">
-                                <a href="<?=$travel["image"]?>"><img src="<?= $travel['image']; ?>" alt="Annonce" height="100" width="100"></a>
-                            </td>
-
-                            <td class="scroll-list-box scroll-list-button">
-                                <form method="post" name="formDelete" action="index.php?action=modifyTravel">
-                                    <button type="submit" name="modify" value="<?= $travel['ID']; ?>" class="btn btn-blue">M</button>
-                                </form>
-                            </td>
-
-                            <td class="scroll-list-box scroll-list-button">
-                                <form method="post" name="formDelete" action="index.php?action=deleteTravel">
-                                    <button type="submit" name="delete" value="<?= $travel['ID']; ?>" class="btn btn-red">X</button>
-                                </form>
-                            </td>
-                        </tr>
-                    <?php endforeach ?>
-                <?php else:?>
-                    <p class="text-white">Vous n'avez pas d'annonces<p>
-                <?php endif?>
-              </table>
-            </div>
-          </div>
       </section>
+      <div style="text-align: center">
+        <div class="bg-dark text-center page-section">
+          <table style="border: 1px solid; margin-left: auto; margin-right: auto; min-width:auto; table-layout: auto; width: 100%; ">
+
+
+            <?php if(count($vendorAds) > 0):?>
+              <th class="text-white" style="border: 1px solid yellow"><h4>Titre</h4></th>
+              <th class="text-white" style="border: 1px solid yellow"><h4>Destination</h4></th>
+                <?php foreach ($vendorAds as $travel) : ?>
+                  <?php if($travel["isVisible"] == "0");?>
+                    <tr style="border: 1px solid yellow">
+                        <td class="text-white" style="border-right: 1px solid grey">
+                            <p><?= $travel['title']; ?></p>
+                        </td>
+
+                        <td class="text-white" style="border-right: 1px solid grey">
+                            <p><?= $travel['destination']; ?></p>
+                        </td>
+
+                        <!--<td class="scroll-list-box scroll-list-item">
+                            <p><strong>Description : </strong>
+                                <textarea class="form-control" style="resize:none;" rows="5" type="text" readonly></*?= $travel['description']; ?>
+                                </textarea></p>
+                        </td> -->
+
+                        <td class="scroll-list-box scroll-list-item" style="border-right: 1px solid grey">
+                            <a href="<?=$travel["image"]?>"><img src="<?= $travel['image']; ?>" alt="Annonce" height="100" width="100"></a>
+                        </td>
+
+                        <td class="scroll-list-box scroll-list-button" style="border-right: 1px solid grey">
+                            <form method="post" name="formDelete" action="/?action=modifyTravel">
+                                <button type="submit" name="modify" value="<?= $travel['ID']; ?>" class="btn btn-blue">M</button>
+                            </form>
+                        </td>
+
+                        <td class="scroll-list-box scroll-list-button">
+                            <form method="post" name="formDelete" action="/?action=deleteTravel">
+                                <button type="submit" name="delete" value="<?= $travel['ID']; ?>" class="btn btn-red">X</button>
+                            </form>
+                        </td>
+                    </tr>
+                <?php endforeach ?>
+            <?php else:?>
+                <p class="text-white">Vous n'avez pas d'annonces<p>
+            <?php endif?>
+          </table>
+        </div>
+      </div>
 
       <hr/>
 
@@ -120,7 +120,7 @@ else
                       <?php endif?>
                   </div>
                   <h4>Changer d'adresse mail:</h4>
-                  <form method="post" name="formRegister" action="index.php?action=changeMail">
+                  <form method="post" name="formRegister" action="/?action=changeMail">
                       <div class="form-group">
                           <label for="loginPseudo"><br/></label>
                           <input type="email" class="form-control" id="newMail" name="newMail" aria-describedby="pseudoHelp" placeholder="Entrez une nouvelle adresse mail" required>
@@ -143,7 +143,7 @@ else
                       <?php endif?>
                   </div>
                   <h4>Changer de mot de passe:</h4>
-                  <form method="post" name="formRegister" action="index.php?action=changePassword">
+                  <form method="post" name="formRegister" action="/?action=changePassword">
                       <div class="form-group">
                           <label for="loginPsw">Ancien mot de passe:</label>
                           <input type="password" class="form-control" id="oldPsw" name="oldPsw" aria-describedby="userNameHelp" placeholder="Entrez votre ancien mot de passe" required>
@@ -175,7 +175,7 @@ else
                         <?php endif?>
                     </div>
                     <h4>Supprimer ce compte:</h4>
-                    <form method="post" id="deleteAccount" name="formRegister" action="index.php?action=deleteAccount">
+                    <form method="post" id="deleteAccount" name="formRegister" action="/?action=deleteAccount">
                       <button type="button" onclick="confirmDeleteAccount()" class="btn btn-primary">Supprimer définitivement ce compte?</button>
                       <br>
                       <br>
@@ -184,7 +184,7 @@ else
 
                 <hr/>
 
-                <form method="post" name="formLogout"  action="index.php?action=logout">
+                <form method="post" name="formLogout"  action="/?action=logout">
                     <button type="submit" class="btn btn-primary btn-xl text-uppercase">Se déconnecter</button>
                 </form>
               </div>

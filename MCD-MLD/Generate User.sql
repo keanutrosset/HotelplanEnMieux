@@ -1,5 +1,5 @@
-CREATE USER 'TPIuser'@'localhost' IDENTIFIED BY 'Pa$$w0rd';
-GRANT USAGE ON *.* TO 'TPIuser'@'localhost';
-GRANT CREATE, UPDATE, SELECT, DELETE  ON `hotelplanenmieux`.* TO 'TPIuser'@'localhost';
+CREATE USER 'hpmieux21_hpm'@'localhost' IDENTIFIED BY 'HPMieux-21';
+GRANT USAGE ON *.* TO 'hpmieux21_hpm'@'localhost';
+GRANT CREATE, UPDATE, SELECT, DELETE  ON `hotelplanenmieux`.* TO 'hpmieux21_hpm'@'localhost';
 FLUSH PRIVILEGES;
-SHOW GRANTS FOR 'TPIuser'@'localhost';
+SHOW GRANTS FOR 'hpmieux21_hpm'@'localhost';

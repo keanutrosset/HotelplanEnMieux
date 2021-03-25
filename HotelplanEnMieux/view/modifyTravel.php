@@ -2,7 +2,7 @@
 /**
  * Author   : keanu.trosset@cpnv.ch
  * Project  : PreTPI HotelplanEnMieux
- * Created  : 15.02.2021
+ * Created  : 01.02.2021
  *
  * Git source  : [https://github.com/keanutrosset/HotelplanEnMieux]
  *
@@ -26,38 +26,28 @@ ob_start();
 <br>
 <br>
 
-<form method="POST" id="formCreation" action="index.php?action=toModifyThisTravel" enctype="multipart/form-data">
+<form method="POST" id="formCreation" action="/?action=toModifyThisTravel" enctype="multipart/form-data">
     <div class="standing-content">
         <div class="standing-container">
 
             <div style="text-align:center">
-                <img id="sendImage" name="imageExemple" src="<?= $travel['image']; ?>" alt="" style="max-width: 30em; max-height: 30em;">
+                <img id="sendImage" name="image" src="<?= $travel['image'];?>" alt="" style="max-width: 30em; max-height: 30em;">
             </div>
 
             <div class="standing-big-button" style="text-align:center">
-                <input id="inputImage" name="image" class="btn btn-grey btn-big" type="file">
+                <input id="inputImage" name="image"  class="btn btn-grey btn-big" type="file">
             </div>
         </div>
 
         <div class="standing-container-right" style="Margin-right:50px; Margin-left:50px">
             <div class="form-group">
                 <label for="travel" class="standing-form-label"><strong>Titre</strong></label>
-                <input name="title" class="form-control standing-form-input" type="text" placeholder="<?= $travel['title']; ?>">
+                <input name="title" class="form-control standing-form-input" type="text" value="<?= $travel['title'];?>" placeholder="<?= $travel['title']; ?> " required>
             </div>
 
             <div class="form-group">
                 <label for="travel" class="standing-form-label"><strong>Destination</strong></label>
-                <input name="destination" class="form-control standing-form-input" type="text" placeholder="<?= $travel['destination']; ?>">
-            </div>
-
-            <div class="form-group">
-                <label for="travel" class="standing-form-label"><strong>Description</strong></label>
-                <textarea name="description" class="form-control standing-form-input" style="resize:none;" rows="5" type="text" placeholder="<?= $travel['description']; ?>"></textarea>
-            </div>
-
-            <div class="form-group">
-                <label for="travel" class="standing-form-label"><strong>Prix</strong></label>
-                <input name="price" class="form-control standing-form-input" type="number" step="0.05" placeholder="Prix">
+                <input name="destination" class="form-control standing-form-input" type="text" value="<?= $travel['destination'];?>" placeholder="<?= $travel['destination']; ?>" required>
             </div>
 
             <div class="form-group">
@@ -83,7 +73,7 @@ ob_start();
 
                 <?php foreach ($checklist as $onecheck) : ?>
                     <div class="standing-form-checkbox-line">
-                      <input id="createChecklist<?= $onecheck["ID"]; ?>" name="createChecklist[]" type="checkbox" <?= in_array($checklist["ID"], $checklistSelected["IDChecklist"]) ? "checked=True" : "" ?>
+                      <input id="createChecklist<?= $onecheck["ID"]; ?>" name="createChecklist[]" type="checkbox" <?= in_array($onecheck["ID"], $checklistSelected) ? "checked=True" : "" ?>
                       value="<?= $onecheck["ID"]; ?>">
                       <label for="createChecklist<?= $onecheck["ID"]; ?>"> <b> <?= $onecheck["thingsToTake"]; ?></b></label>
                     </div>
@@ -93,29 +83,32 @@ ob_start();
             </div>
 
             <div>
-              <table style="width: 100%; height:15em; border: 1px solid black">
-                <p>Activity</p>
+              <table id="activityTable" style="width: 100%; height:15em; border: 1px solid black">
+                <H5>Activity</H5>
                 <tr>
-                  <td>desc</td>
-                  <td>patata</td>
-                  <td>patati</td>
-                  <td>proutproutprout</td>
+                  <td>Description</td>
+                  <td>Date</td>
+                  <td>Prix</td>
+                  <td>Lien hypertexte</td>
+                  <td>remarque</td>
                 </tr>
                 <tr>
-                  <td><input type="text" name="desc"></td>
-                  <td><input type="text" name="desc"></td>
-                  <td><input type="text" name="desc"></td>
-                  <td><input type="text" name="desc"></td>
+                  <td><input type="text" name="description"><?= $activity['description']; ?></td>
+                  <td><input type="date" name="date"><?= $activity['date']; ?></td>
+                  <td><input type="number" step="0.05" name="price" placeholder="Prix"><?= $activity['price']; ?></td>
+                  <td><input type="text" name="hypertextLink"><?= $activity['hypertextLink']; ?></td>
+                  <td><textarea type="textarea" name="remark" style="resize:none;"><?= $activity['remark']; ?></textarea></td>
                   <td class="scroll-list-box scroll-list-button">
-                      <form method="post" name="formModify" action="index.php?action=modifyAnnonce">
-                          <button type="submit" name="fakeId" value="<?= $activity['ID']; ?>" class="btn btn-blue">M</button>
+                      <form method="post" name="formModify" action="addTR()">
+                          <button type="submit" name="fakeId" value="<?= $activity['ID']; ?>" class="btn btn-blue">+</button>
                       </form>
                   </td>
                 </tr>
 
+
               </table>
             </div>
-
+            <br>
             <div class="standing-container-bottom" style="text-align:center">
                 <button type="submit" class="btn btn-primary btn-xl text-uppercase">Enregister</button>
             </div>
@@ -126,6 +119,36 @@ ob_start();
 <br>
 <script>
 
+    function addTR(id){
+      const issueBlock = document.getElementById(id);
+      const idNumberOfCount = idPiece+"countOfNewIssue";
+      const numberOfCount = document.getElementById(idNumberOfCount);
+      if(parseInt(numberOfCount.value) === 0){
+          numberOfCount.value = 1;
+      }
+      let i = numberOfCount.value;
+      numberOfCount.value = parseInt(i)+1;
+
+      issueBlock.innerHTML +=
+        "<tr>
+          <td><input type="text" name="description'+i'"></td>
+          <td><input type="date" name="date'+i'"></td>
+          <td><input type="number" step="0.05" name="price'+i'" placeholder="Prix"></td>
+          <td><input type="text" name="hypertextLink'+i'"></td>
+          <td><textarea type="textarea" name="remark'+i'" style="resize:none;"></textarea></td>
+          <td class="scroll-list-box scroll-list-button">
+              <form method="post" name="formModify" action="">
+                  <button type="submit" name="fakeId" value="" class="btn btn-blue">+</button>
+              </form>
+          </td>
+        </tr>"
+
+        ;
+        i++;
+
+      }
+
+    }
     function readURL(input) {
         var url = input.value;
         var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();

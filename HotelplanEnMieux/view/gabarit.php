@@ -39,7 +39,7 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav text-uppercase ml-auto">
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="?action=home#travel">Voyages</a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="">Mes voyages</a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="?action=myTravelHistory">Mes voyages</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="?action=createTravel">Crée une annonce</a></li>
                         <?php if(isset($_SESSION["userId"])):?>
                             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="?action=profil">Profil</a></li>

@@ -69,28 +69,28 @@ ob_start();
         </div>
         <div class="row">
         <?php if(count($vendorAds) > 0):?>
-            <?php foreach ($vendorAds as $annonce) : ?>
-              <?php if($annonce["isVisible"] == 0):?>
+            <?php foreach ($vendorAds as $aTravel) : ?>
+              <?php if($aTravel["isVisible"] == 0):?>
 
 
                     <div class="col-lg-4 col-sm-6 mb-4">
                         <div class="travel-item">
-                            <a class="travel-link" data-toggle="modal" href="#travel<?= $annonce["ID"]?>">
+                            <a class="travel-link" data-toggle="modal" href="#travel<?= $aTravel["ID"]?>">
                                 <div class="travel-hover">
                                     <div class="travel-hover-content"><i class="fas fa-plus "></i></div>
                                 </div>
-                                <img class="center" style="display: block; margin-left: auto; margin-right: auto; min-height:20rem; min-width:100%; max-height:20rem; max-width:15rem;" src="<?= $annonce['image']; ?>" alt="">
+                                <img class="center" style="display: block; margin-left: auto; margin-right: auto; min-height:20rem; min-width:100%; max-height:20rem; max-width:15rem;" src="<?= $aTravel['image']; ?>" alt="">
                             </a>
                             <div class="travel-caption">
-                                <div class="travel-caption-heading"><?= $annonce['title']; ?></div>
-                                <div class="travel-caption-subheading text-muted"><?= $annonce['destination']; ?></div>
+                                <div class="travel-caption-heading"><?= $aTravel['title']; ?></div>
+                                <div class="travel-caption-subheading text-muted"><?= $aTravel['destination']; ?></div>
                             </div>
                         </div>
                     </div>
 
                     <!-- travel Modals-->
                     <!-- Modal 1-->
-                    <div class="travel-modal modal fade" id="travel<?= $annonce["ID"]?>" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="travel-modal modal fade" id="travel<?= $aTravel["ID"]?>" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="close-modal" data-dismiss="modal"><img src="assets/img/close-icon.svg" alt="" /></div>
@@ -99,19 +99,22 @@ ob_start();
                                         <div class="col-lg-8">
                                             <div class="modal-body">
                                                 <!-- Project Details Go Here-->
-                                                <h2 class="text-uppercase"><?= $annonce['title']; ?></h2>
-                                                <p class="item-intro text-muted"><?= $annonce['destination']; ?></p>
-                                                <img class="img-fluid d-block mx-auto" src="<?= $annonce['image']; ?>" alt="" />
-                                                <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
+                                                <h2 class="text-uppercase"><?= $aTravel['title']; ?></h2>
+                                                <p class="item-intro text-muted"><?= $aTravel['destination']; ?></p>
+                                                <img class="img-fluid d-block mx-auto" src="<?= $aTravel['image']; ?>" style="max-width: 30em; max-height: 30em;" alt="" />
+                                                <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
                                                 <ul class="list-inline">
                                                     <li>Date: January 2020</li>
                                                     <li>Client: Threads</li>
                                                     <li>Category: Illustration</li>
                                                 </ul>
-                                                <button class="btn btn-primary" data-dismiss="modal" type="button">
-                                                    <i class="fas fa-times mr-1"></i>
-                                                    Close Project
-                                                </button>
+                                                <form method="post" name="formParticipate" action="/?action=participate">
+                                                  <button class="btn btn-primary" name="participate" value="<?= $aTravel["ID"]?>" type="submit">
+                                                      <i class="fas mr-1"></i>
+                                                      Je veux participer
+                                                      <i class="fas mr-1"></i>
+                                                  </button>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
@@ -122,7 +125,7 @@ ob_start();
                   <?php endif?>
                     <?php endforeach ?>
               <?php else:?>
-                  Aucune annonces disponible pour le moment, veuillez repassez a un autre moment de la journée.
+                <p class="text-center page-section">Aucune annonces disponible pour le moment, veuillez repassez a un autre moment de la journée.</p>
               <?php endif?>
 
         </div>
