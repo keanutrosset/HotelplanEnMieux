@@ -66,6 +66,23 @@ ob_start();
                                               <li>Client: Threads</li>
                                               <li>Category: Illustration</li>
                                           </ul>
+
+
+                                          <?php foreach ($checklist as $onecheck) : ?>
+                                            <?php if($onecheck["IDTravel"] == $aTravel['ID']) ?>
+                                            <h5>Checklist</h5>
+                                            <ul>
+                                              <div class="standing-form-checkbox-line">
+                                                <li><input id="chk<?= $onecheck["ID"];?>" name="createChecklist[]" type="checkbox"
+                                                <?= $onecheck["isOk"] ? "checked=True" : "" ?> value="<?= $onecheck["ID"]; ?>"></li>
+
+                                                <li><label for="chk<?= $onecheck["ID"]; ?>"> <b> <?= $onecheck["thingsToTake"]; ?></b></label></li>
+
+                                                <li><input id="qty<?= $onecheck["ID"];?>" type="number" style="width:3em"
+                                                name="qtyCheck<?= $onecheck["ID"]; ?>" value="<?= $onecheck["quantity"];?>" placeholder="NB" readonly></td></li>
+                                              </div>
+                                            </ul>
+                                          <?php endforeach ?>
                                           <?php if($aTravel["userAccepted"] == 0) :?>
                                           <h3><?= $aTravel['email']; ?> veux participer a ce voyage</h3>
                                           <?php elseif($aTravel["userAccepted"] == 1) :?>

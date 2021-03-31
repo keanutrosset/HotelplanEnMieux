@@ -15,7 +15,7 @@ function createTravel(){
 
 function toCreateATravel($travel, $image){
 
-  if(isset($travel["title"]) && isset($travel["destination"]) && isset($travel["createType"])|| $image["error"] != 0){
+  if($image["error"] != 0 || isset($travel["title"]) && isset($travel["destination"]) && isset($travel["createType"])){
     $correctFilesType = array("image/png", "image/jpg", "image/jpeg", "image/gif");
       if(in_array($image['image']['type'], $correctFilesType) && $image['image']['size'] < 10000000)
       {
@@ -78,6 +78,7 @@ function toCreateATravel($travel, $image){
     require "view/modifyTravel.php";
     exit();
   }
+  
   function toModifyThisTravel($userID, $travelToModify, $imageToModify, $travelID){
     if(isset($travelToModify["title"]) && isset($travelToModify["destination"]) && isset($travelToModify["createType"])){
       if(isset($imageToModify)|| $imageToModify["error"] != 0){
@@ -159,6 +160,14 @@ function toCreateATravel($travel, $image){
         header("Location:?action=myTravelHistory");
         exit();
       }
+
+    }
+
+    function exportPDF($travelID){
+      $travelID = $travelID;
+      require_once 'controler/pdf.php';
+
+      //echo('<script>alert("PDF exporter et enregistrer sur dans vos telechargement")</script>');
 
     }
 

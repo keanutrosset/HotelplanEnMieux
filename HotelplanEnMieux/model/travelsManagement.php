@@ -12,7 +12,7 @@ function checklistReturn($travelID){
 
   /*$checklistQuery = 'SELECT ID, thingsToTake FROM checklist';*/
 
-  $checklistQuery = 'SELECT * FROM (SELECT * FROM travel_checklist WHERE IDTravel = '.$travelID.') AS USER_CHECKLIST
+  $checklistQuery = 'SELECT checklist.ID, checklist.thingsToTake, checklist.ThingsToDo FROM (SELECT ID, isOk, quantity, IDTravel, IDChecklist FROM travel_checklist WHERE IDTravel = '.$travelID.') AS USER_CHECKLIST
   RIGHT JOIN checklist ON checklist.ID = USER_CHECKLIST.IDChecklist';
 
   require_once 'model/dbConnector.php';
@@ -31,13 +31,25 @@ function checklistSelectedReturn($travelID){
 
   $strSeparator = '\'';
 
-  $checklistSelectedQuery = 'SELECT IDChecklist FROM travel_checklist WHERE IDTravel = '.$strSeparator.$travelID.$strSeparator;
+  $checklistSelectedQuery = 'SELECT quantity, IDChecklist FROM travel_checklist WHERE IDTravel = '.$strSeparator.$travelID.$strSeparator;
 
   require_once 'model/dbConnector.php';
 
   $result = executeQuerySelect($checklistSelectedQuery);
 
   return $result;
+}
+
+function checklistForMyTravel(){
+
+  $checklistQuery = 'SELECT * FROM (SELECT * FROM travel_checklist) AS USER_CHECKLIST
+  LEFT JOIN checklist ON checklist.ID = USER_CHECKLIST.IDChecklist';
+
+  require_once 'model/dbConnector.php';
+
+  $result = executeQuerySelect($checklistQuery);
+
+  return $result;;
 }
 
 function activityReturn($travelID){
@@ -112,8 +124,12 @@ function modifyATravel($travel, $image, $userID){
   $result = executeQueryInsert($deleteChecklistQuery,$deleteChecklistData);
 
   foreach($travel["createChecklist"] as $thisChecklist){
-    $createChecklistQuery ='INSERT INTO travel_checklist (`IDTravel`, `IDChecklist`) VALUES(:IDTravel, :IDChecklist)';
-    $createChecklistData = array(":IDTravel"=>$travel["travelID"],":IDChecklist"=>$thisChecklist);
+    if($travel["qtyCheck".$thisChecklist] == ""){
+      $travel["qtyCheck".$thisChecklist] = NULL;
+    }
+
+    $createChecklistQuery ='INSERT INTO travel_checklist (`quantity`,`IDTravel`, `IDChecklist`) VALUES(:quantity, :IDTravel, :IDChecklist)';
+    $createChecklistData = array("quantity"=>$travel["qtyCheck".$thisChecklist],":IDTravel"=>$travel["travelID"],":IDChecklist"=>$thisChecklist);
 
     $resultCheck = executeQueryInsert($createChecklistQuery,$createChecklistData);
   }
@@ -124,9 +140,6 @@ function modifyATravel($travel, $image, $userID){
 function deleteATravel($travelID){
 
   $result = false;
-
-  print_r("<br><br><br><br>");
-  print_r($travelID);
 
   $deleteATravelQuery = 'DELETE FROM travel WHERE ID = :id';
   $deleteATravelData = array(":id" => $travelID);

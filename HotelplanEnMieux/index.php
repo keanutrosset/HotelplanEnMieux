@@ -105,8 +105,13 @@ if (isset($_GET['action']))
           acceptAUser($_POST["accept"]);
           break;
 
+      case 'exportPDF':
+          exportPDF($_POST["pdf"]);
+          break;
+
       case 'dontAcceptAUser':
           dontAcceptAUser($_POST["dontAccept"]);
+          break;
 
       default :
           home();

@@ -73,19 +73,24 @@ ob_start();
 
                 <?php foreach ($checklist as $onecheck) : ?>
                     <div class="standing-form-checkbox-line">
-                      <input id="createChecklist<?= $onecheck["ID"]; ?>" name="createChecklist[]" type="checkbox" <?= in_array($onecheck["ID"], $checklistSelected) ? "checked=True" : "" ?>
-                      value="<?= $onecheck["ID"]; ?>">
-                      <label for="createChecklist<?= $onecheck["ID"]; ?>"> <b> <?= $onecheck["thingsToTake"]; ?></b></label>
+                      <input id="chk<?= $onecheck["ID"];?>" onclick="showNB('<?= $onecheck["ID"];?>');" name="createChecklist[]" type="checkbox"
+                      <?= in_array($onecheck["ID"], $checklistSelected) ? "checked=True" : "" ?> value="<?= $onecheck["ID"]; ?>">
+
+                      <label for="chk<?= $onecheck["ID"]; ?>"> <b> <?= $onecheck["thingsToTake"]; ?></b></label>
+
+                      <input id="qty<?= $onecheck["ID"];?>" type="number" style="width:3em;
+                      visibility:<?= in_array($onecheck['ID'], $checklistSelected) ? 'visible' : 'hidden' ?>" step="1" min="0" max="10"
+                      name="qtyCheck<?= $onecheck["ID"]; ?>" value="<?= $onecheck["quantity"];?>" placeholder="NB"></td>
                     </div>
                 <?php endforeach ?>
 
 
             </div>
 
-            <div>
-              <table id="activityTable" style="width: 100%; height:15em; border: 1px solid black">
-                <H5>Activity</H5>
-                <tr>
+            <!--<div class="form-group">
+              <H5>Activity</H5>
+              <table id="activityTable" style="width: 15em; height:15em; border: 1px solid black">
+                <tr style="border-bottom: 1px solid black">
                   <td>Description</td>
                   <td>Date</td>
                   <td>Prix</td>
@@ -107,7 +112,7 @@ ob_start();
 
 
               </table>
-            </div>
+            </div>-->
             <br>
             <div class="standing-container-bottom" style="text-align:center">
                 <button type="submit" class="btn btn-primary btn-xl text-uppercase">Enregister</button>
@@ -119,7 +124,23 @@ ob_start();
 <br>
 <script>
 
-    function addTR(id){
+    function showNB(id){
+        chk = document.getElementById("chk" + id);
+        qty = document.getElementById("qty" + id);
+        console.log(chk);
+        console.log(qty);
+        console.log(chk.checked);
+        console.log(qty.style);
+
+        if(chk.checked == true){
+            qty.style.visibility = "visible";
+        }
+        else{
+          qty.style.visibility = "hidden";
+        }
+    }
+
+    /*function addTR(id){
       const issueBlock = document.getElementById(id);
       const idNumberOfCount = idPiece+"countOfNewIssue";
       const numberOfCount = document.getElementById(idNumberOfCount);
@@ -148,7 +169,7 @@ ob_start();
 
       }
 
-    }
+    }*/
     function readURL(input) {
         var url = input.value;
         var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();

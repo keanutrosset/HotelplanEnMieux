@@ -35,7 +35,7 @@ ob_start();
             </div>
 
             <div class="standing-big-button" style="text-align:center">
-                <input id="inputImage" name="image" class="btn btn-grey btn-big" type="file" >
+                <input id="inputImage" name="image" class="btn btn-grey btn-big" type="file" required>
             </div>
         </div>
 

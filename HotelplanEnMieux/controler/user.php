@@ -21,6 +21,7 @@ function home($errorTitle = "", $errorMessage = "")
     $vendorAds = dataFromAllVendor();
 
     $homePageFlag = true;
+    ob_start();
     require "view/home.php";
     exit();
 }
@@ -35,6 +36,8 @@ function myTravelHistory($userID){
       require_once "model/travelsManagement.php";
 
       $myparticipateTravel = myparticipateTravel($userID);
+
+      $checklist = checklistReturn($travelID);
 
       require "view/myTravel.php";
   }
