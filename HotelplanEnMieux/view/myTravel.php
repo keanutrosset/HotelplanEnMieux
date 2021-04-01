@@ -60,11 +60,13 @@ ob_start();
                                           <h2 class="text-uppercase"><?= $aTravel['title']; ?></h2>
                                           <p class="item-intro text-muted"><br><?= $aTravel['destination']; ?></p>
                                           <img class="img-fluid d-block mx-auto" src="<?= $aTravel['image']; ?>" style="max-width: 30em; max-height: 30em;" alt="" />
-        
+
 
                                           <?php if(isset($checklist) && in_array($aTravel['IDTravel'], array_column($checklist, "IDTravel"))) : ?>
                                             <h5>Checklist</h5>
+                                            <?php if($aTravel['IDLogUser'] == $_SESSION["userId"] && $aTravel['userAccepted'] == 1):?>
                                             <form method="post" name="formParticipate" action="/?action=saveChecklist">
+                                            <?php endif?>
                                           <?php foreach ($checklist as $onecheck) : ?>
                                             <?php if($onecheck["IDTravel"] == $aTravel['IDTravel']) :?>
 
@@ -80,10 +82,12 @@ ob_start();
 
                                             <?php endif?>
                                           <?php endforeach ?>
+                                          <?php if($aTravel['IDLogUser'] == $_SESSION["userId"] && $aTravel['userAccepted'] == 0):?>
                                             <button class="btn btn-blue btn-primary" name="IDTravel" value="<?= $aTravel['IDTravel']?>" type="submit">
                                                 Sauvegarder la checklist
                                             </button>
                                           </form>
+                                          <?php endif?>
                                           <?php endif?>
 
                                           <br>
