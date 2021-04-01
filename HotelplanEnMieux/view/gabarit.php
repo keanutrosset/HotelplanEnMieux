@@ -41,7 +41,7 @@
                     <ul class="navbar-nav text-uppercase ml-auto">
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="?action=home#travel">Voyages</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="?action=myTravelHistory">Mes voyages</a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="?action=createTravel">Crée une annonce</a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="?action=createTravel">Créer une annonce</a></li>
                         <?php if(isset($_SESSION["userId"])):?>
                             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="?action=profil">Profil</a></li>
                         <?php else:?>
@@ -84,7 +84,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
         <!-- Contact form JS-->
         <script src="../assets/mail/jqBootstrapValidation.js"></script>
-        <script src="../assets/mail/contact_me.js"></script>
+
         <!-- Core theme JS-->
     </body>
 </html>

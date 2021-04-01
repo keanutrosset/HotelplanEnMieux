@@ -11,12 +11,8 @@
 
 $title = "HotelplanEnMieux";
 
-$aTravel = $vendorAds[array_search($travelID, array_column($vendorAds, "ID"))];
 
-$pdf = true;
 
-//$imageType = pathinfo($aTravel["image"],  PATHINFO_EXTENSION);
-//$aTravel["image"] = base64_encode(file_get_contents($aTravel["image"]));
 
 // tampon de flux stocké en mémoire
 //ob_start();
@@ -43,36 +39,38 @@ $pdf = true;
 <div class="bg-light" id="divMain">
 <!-- Masthead-->
 <section class="bg-light" id="travel">
-    <div class="container">
+    <div class="">
 
         <!-- travel Modals-->
         <!-- Modal 1-->
-        <div class="travel-modal" id="travel<?= $aTravel["ID"]?>"  role="dialog">
+        <div class="travel-modal fade text-center" id="travel<?= $aTravel["ID"]?>"  role="dialog">
             <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-8">
-                                <div class="modal-body">
-                                    <!-- Project Details Go Here-->
-                                    <h2 class="text-uppercase"><?= $aTravel['title']; ?></h2>
-                                    <p class="item-intro text-muted"><?= $aTravel['destination']; ?></p>
-                                    <img class="img-fluid d-block mx-auto" src="<?= $aTravel["image"] ?>" style="max-width: 30em; max-height: 30em;" alt="" />
-                                    <br>
-                                    <br>
-                                    <br>
-                                    <br>
-                                    <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                    <ul class="list-inline">
-                                        <li>Date: January 2020</li>
-                                        <li>Client: Threads</li>
-                                        <li>Category: Illustration</li>
-                                    </ul>
+                  <div class="row justify-content-center">
+
+                          <div class="modal-body">
+                              <!-- Project Details Go Here-->
+                              <h2 class="text-uppercase"><?= $aTravel['title']; ?></h2>
+                              <p class="item-intro text-muted"><?= $aTravel['destination']; ?></p>
+                              <br>
+                              <img class="img-fluid d-block " src="<?= $path_img ?>" style="max-width: 550px; height: 250px;" alt="image" />
+                              <div class="text-center">
+                              <?php if(isset($checklist) && in_array($aTravel['ID'], array_column($checklist, "IDTravel"))) : ?>
+                                <h5>Checklist</h5>
+                              <?php foreach ($checklist as $onecheck) : ?>
+                                <?php if($onecheck["IDTravel"] == $aTravel['ID']) :?>
+
+                                  <div class="standing-form-checkbox-line">
+
+                                    <a class="text-muted" for="chk<?= $onecheck["ID"]; ?>"> <b> <?= $onecheck["thingsToTake"]; ?></b></a>
+                                    <a class="text-muted"><?= $onecheck["quantity"];?><?=isset($onecheck["quantity"]) ? 'x': ''?></a></td>
                                   </div>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
+
+                                <?php endif?>
+                              <?php endforeach ?>
+                              <?php endif?>
+                            </div>
+                            </div>
+                    </div>
               </div>
           </div>
 

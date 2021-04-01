@@ -16,7 +16,7 @@ function createTravel(){
 function toCreateATravel($travel, $image){
 
   if($image["error"] != 0 || isset($travel["title"]) && isset($travel["destination"]) && isset($travel["createType"])){
-    $correctFilesType = array("image/png", "image/jpg", "image/jpeg", "image/gif");
+  $correctFilesType = array("image/png", "image/jpg", "image/jpeg"/*, "image/gif"*/);
       if(in_array($image['image']['type'], $correctFilesType) && $image['image']['size'] < 10000000)
       {
           do
@@ -71,18 +71,16 @@ function toCreateATravel($travel, $image){
 
     $checklistSelected = array_column(checklistSelectedReturn($travelID), "IDChecklist");
 
-    $activity = activityReturn($travelID);
-
     $_SESSION["travelID"] = $travelID;
 
     require "view/modifyTravel.php";
     exit();
   }
-  
+
   function toModifyThisTravel($userID, $travelToModify, $imageToModify, $travelID){
     if(isset($travelToModify["title"]) && isset($travelToModify["destination"]) && isset($travelToModify["createType"])){
       if(isset($imageToModify)|| $imageToModify["error"] != 0){
-        $correctFilesType = array("image/png", "image/jpg", "image/jpeg", "image/gif");
+      $correctFilesType = array("image/png", "image/jpg", "image/jpeg"/*, "image/gif"*/);
           if(in_array($imageToModify['image']['type'], $correctFilesType) && $imageToModify['image']['size'] < 10000000)
           {
               do
@@ -167,9 +165,15 @@ function toCreateATravel($travel, $image){
       $travelID = $travelID;
       require_once 'controler/pdf.php';
 
-      //echo('<script>alert("PDF exporter et enregistrer sur dans vos telechargement")</script>');
-
     }
+    function saveChecklist($checklist){
+
+      require_once "model/travelsManagement.php";
+      if(checklistForMyTravelEdit($checklist)){
+        header("Location:?action=myTravelHistory");
+        exit();
+    }
+  }
 
 
 ?>

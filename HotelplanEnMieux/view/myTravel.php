@@ -60,29 +60,34 @@ ob_start();
                                           <h2 class="text-uppercase"><?= $aTravel['title']; ?></h2>
                                           <p class="item-intro text-muted"><br><?= $aTravel['destination']; ?></p>
                                           <img class="img-fluid d-block mx-auto" src="<?= $aTravel['image']; ?>" style="max-width: 30em; max-height: 30em;" alt="" />
-                                          <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                          <ul class="list-inline">
-                                              <li>Date: January 2020</li>
-                                              <li>Client: Threads</li>
-                                              <li>Category: Illustration</li>
-                                          </ul>
+        
 
-
-                                          <?php foreach ($checklist as $onecheck) : ?>
-                                            <?php if($onecheck["IDTravel"] == $aTravel['ID']) ?>
+                                          <?php if(isset($checklist) && in_array($aTravel['IDTravel'], array_column($checklist, "IDTravel"))) : ?>
                                             <h5>Checklist</h5>
-                                            <ul>
+                                            <form method="post" name="formParticipate" action="/?action=saveChecklist">
+                                          <?php foreach ($checklist as $onecheck) : ?>
+                                            <?php if($onecheck["IDTravel"] == $aTravel['IDTravel']) :?>
+
                                               <div class="standing-form-checkbox-line">
-                                                <li><input id="chk<?= $onecheck["ID"];?>" name="createChecklist[]" type="checkbox"
-                                                <?= $onecheck["isOk"] ? "checked=True" : "" ?> value="<?= $onecheck["ID"]; ?>"></li>
+                                                <input id="chk<?= $onecheck["ID"];?>" name="createChecklist[]" type="checkbox"
+                                                <?= $onecheck["isOk"] ? "checked=True" : "" ?> value="<?= $onecheck["ID"]; ?>">
 
-                                                <li><label for="chk<?= $onecheck["ID"]; ?>"> <b> <?= $onecheck["thingsToTake"]; ?></b></label></li>
+                                                <label for="chk<?= $onecheck["ID"]; ?>"> <b> <?= $onecheck["thingsToTake"]; ?></b></label>
 
-                                                <li><input id="qty<?= $onecheck["ID"];?>" type="number" style="width:3em"
-                                                name="qtyCheck<?= $onecheck["ID"]; ?>" value="<?= $onecheck["quantity"];?>" placeholder="NB" readonly></td></li>
+                                                <input  type="number" style="width:3em"
+                                                 value="<?= $onecheck["quantity"];?>" placeholder="NB" readonly></td>
                                               </div>
-                                            </ul>
+
+                                            <?php endif?>
                                           <?php endforeach ?>
+                                            <button class="btn btn-blue btn-primary" name="IDTravel" value="<?= $aTravel['IDTravel']?>" type="submit">
+                                                Sauvegarder la checklist
+                                            </button>
+                                          </form>
+                                          <?php endif?>
+
+                                          <br>
+
                                           <?php if($aTravel["userAccepted"] == 0) :?>
                                           <h3><?= $aTravel['email']; ?> veux participer a ce voyage</h3>
                                           <?php elseif($aTravel["userAccepted"] == 1) :?>

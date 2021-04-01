@@ -101,12 +101,26 @@ ob_start();
                                                 <h2 class="text-uppercase"><?= $aTravel['title']; ?></h2>
                                                 <p class="item-intro text-muted"><?= $aTravel['destination']; ?></p>
                                                 <img class="img-fluid d-block mx-auto" src="<?= $aTravel['image']; ?>" style="display: block; margin-left: auto; margin-right: auto; min-height:20rem; min-width:100%;" alt="" />
-                                                <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                                <ul class="list-inline">
-                                                    <li>Date: January 2020</li>
-                                                    <li>Client: Threads</li>
-                                                    <li>Category: Illustration</li>
-                                                </ul>
+
+                                                <?php if(isset($checklist) && in_array($aTravel['ID'], array_column($checklist, "IDTravel"))) : ?>
+                                                  <h5>Checklist</h5>
+                                                <?php foreach ($checklist as $onecheck) : ?>
+                                                  <?php if($onecheck["IDTravel"] == $aTravel['ID']) :?>
+
+                                                    <div class="standing-form-checkbox-line">
+
+                                                      <label for="chk<?= $onecheck["ID"]; ?>"> <b> <?= $onecheck["thingsToTake"]; ?></b></label>
+
+                                                      <input id="qty<?= $onecheck["ID"];?>" type="number" style="width:3em"
+                                                      name="qtyCheck<?= $onecheck["ID"]; ?>" value="<?= $onecheck["quantity"];?>" placeholder="NB" readonly></td>
+                                                    </div>
+
+                                                  <?php endif?>
+                                                <?php endforeach ?>
+                                                <?php endif?>
+
+                                                <br>
+
                                                 <form method="post" name="formParticipate" action="/?action=participate">
                                                   <button class="btn btn-primary" name="participate" value="<?= $aTravel["ID"]?>" type="submit">
                                                       <i class="fas mr-1"></i>

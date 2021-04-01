@@ -10,17 +10,12 @@
 
 function checklistReturn($travelID){
 
-  /*$checklistQuery = 'SELECT ID, thingsToTake FROM checklist';*/
-
-  $checklistQuery = 'SELECT checklist.ID, checklist.thingsToTake, checklist.ThingsToDo FROM (SELECT ID, isOk, quantity, IDTravel, IDChecklist FROM travel_checklist WHERE IDTravel = '.$travelID.') AS USER_CHECKLIST
+  $checklistQuery = 'SELECT checklist.ID, checklist.thingsToTake, checklist.ThingsToDo, USER_CHECKLIST.quantity FROM (SELECT ID, isOk, quantity, IDTravel, IDChecklist FROM travel_checklist WHERE IDTravel = '.$travelID.') AS USER_CHECKLIST
   RIGHT JOIN checklist ON checklist.ID = USER_CHECKLIST.IDChecklist';
 
   require_once 'model/dbConnector.php';
 
   $result = executeQuerySelect($checklistQuery);
-
-  /*SELECT * FROM (SELECT * FROM travel_checklist WHERE IDTravel = 34) AS USER_CHECKLIST
-  RIGHT JOIN checklist ON checklist.ID = USER_CHECKLIST.IDChecklist*/
 
 
   return $result;
@@ -49,7 +44,7 @@ function checklistForMyTravel(){
 
   $result = executeQuerySelect($checklistQuery);
 
-  return $result;;
+  return $result;
 }
 
 function activityReturn($travelID){
@@ -123,6 +118,9 @@ function modifyATravel($travel, $image, $userID){
   require_once 'model/dbConnector.php';
   $result = executeQueryInsert($deleteChecklistQuery,$deleteChecklistData);
 
+  if($travel["createChecklist"] == NULL){
+    $travel["createChecklist"] = array();
+  }
   foreach($travel["createChecklist"] as $thisChecklist){
     if($travel["qtyCheck".$thisChecklist] == ""){
       $travel["qtyCheck".$thisChecklist] = NULL;
@@ -168,7 +166,7 @@ function myparticipateTravel($userID){
   $result = false;
 
   $strSeparator = '\'';
-  $oneTravelQuery = 'SELECT travel.ID AS travelID, travel.IDLogUser, title, destination, image, loguser.email, participate.userAccepted, participate.ID AS participateID
+  $oneTravelQuery = 'SELECT travel.ID AS IDTravel, travel.IDLogUser, title, destination, image, loguser.email, participate.userAccepted, participate.ID AS participateID
   FROM travel INNER JOIN participate ON travel.ID = participate.IDTravel
   INNER JOIN loguser ON participate.IDLoguser = loguser.ID
   WHERE userAccepted IS NOT NULL AND participate.IDLoguser = '.$strSeparator.$userID.$strSeparator.'OR travel.IDLogUser = '.$strSeparator.$userID.$strSeparator;
@@ -238,6 +236,30 @@ function dataFromAllVendor(){
   require_once 'model/dbConnector.php';
   $result = executeQuerySelect($homeQuery);
 
+
+  return $result;
+}
+
+function checklistForMyTravelEdit($checklist){
+
+  $result = false;
+
+  $strSeparator = '\'';
+      if(isset($checklist["createChecklist"]) == false){
+        $checklist["createChecklist"] = array(-1);
+      }
+      $isOkChecklistQuery ='UPDATE travel_checklist SET `isOk` = :isOk WHERE IDTravel = '.$strSeparator.$checklist["IDTravel"].$strSeparator.'AND IDChecklist IN('.implode(",",$checklist["createChecklist"]).')';
+
+      $isOkChecklistData = array(":isOk"=>"1");
+
+      require_once 'model/dbConnector.php';
+      $result = executeQueryInsert($isOkChecklistQuery,$isOkChecklistData);
+
+      $isOkChecklistQuery2 ='UPDATE travel_checklist SET `isOk` = :isOk WHERE IDTravel = '.$strSeparator.$checklist["IDTravel"].$strSeparator.'AND IDChecklist NOT IN('.implode(",",$checklist["createChecklist"]).')';
+
+      $isOkChecklistData2 = array(":isOk"=>"0");
+
+      $result2 = executeQueryInsert($isOkChecklistQuery2,$isOkChecklistData2);
 
   return $result;
 }

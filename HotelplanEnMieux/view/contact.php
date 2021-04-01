@@ -22,7 +22,7 @@ ob_start();
         <h2 class="section-heading text-uppercase">Contactez-moi</h2>
         <h3 class="section-subheading text-muted">Je repondrais au plus vite.</h3>
     </div>
-    <form id="contactForm" name="sentMessage" action="/?action=contactMail" novalidate="novalidate">
+    <form id="contactForm" name="sentMessage" action="/?action=contactMail" novalidate="novalidate" method="POST">
         <div class="row align-items-stretch mb-5">
             <div class="col-md-6">
                 <div class="form-group">

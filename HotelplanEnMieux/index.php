@@ -65,7 +65,7 @@ if (isset($_GET['action']))
             toCreateATravel($_POST, $_FILES);
             break;
 
-      case 'mail':
+      case 'contactMail':
           contactEmail($_POST);
           break;
 
@@ -111,6 +111,10 @@ if (isset($_GET['action']))
 
       case 'dontAcceptAUser':
           dontAcceptAUser($_POST["dontAccept"]);
+          break;
+
+      case 'saveChecklist':
+          saveChecklist($_POST);
           break;
 
       default :

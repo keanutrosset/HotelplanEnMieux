@@ -37,7 +37,17 @@ CREATE TABLE IF NOT EXISTS `checklist` (
   `quantity` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID`)
 );
--- Les données exportées n'étaient pas sélectionnées.
+
+-- Listage des données de la table hpmieux21_hpm.checklist : ~6 rows (environ)
+
+INSERT INTO `checklist` (`ID`, `thingsToTake`, `thingsToDo`) VALUES
+	(1, 'Vêtement chaud', ''),
+	(2, 'Chaussure de marche', ''),
+	(3, 'Chaussettes de rechange', ''),
+	(4, 'Raquette de ping pong', ''),
+	(5, 'Equipement de plongée', ''),
+	(6, 'Divers', '');
+
 
 
 

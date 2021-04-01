@@ -86,33 +86,6 @@ ob_start();
 
 
             </div>
-
-            <!--<div class="form-group">
-              <H5>Activity</H5>
-              <table id="activityTable" style="width: 15em; height:15em; border: 1px solid black">
-                <tr style="border-bottom: 1px solid black">
-                  <td>Description</td>
-                  <td>Date</td>
-                  <td>Prix</td>
-                  <td>Lien hypertexte</td>
-                  <td>remarque</td>
-                </tr>
-                <tr>
-                  <td><input type="text" name="description"><?= $activity['description']; ?></td>
-                  <td><input type="date" name="date"><?= $activity['date']; ?></td>
-                  <td><input type="number" step="0.05" name="price" placeholder="Prix"><?= $activity['price']; ?></td>
-                  <td><input type="text" name="hypertextLink"><?= $activity['hypertextLink']; ?></td>
-                  <td><textarea type="textarea" name="remark" style="resize:none;"><?= $activity['remark']; ?></textarea></td>
-                  <td class="scroll-list-box scroll-list-button">
-                      <form method="post" name="formModify" action="addTR()">
-                          <button type="submit" name="fakeId" value="<?= $activity['ID']; ?>" class="btn btn-blue">+</button>
-                      </form>
-                  </td>
-                </tr>
-
-
-              </table>
-            </div>-->
             <br>
             <div class="standing-container-bottom" style="text-align:center">
                 <button type="submit" class="btn btn-primary btn-xl text-uppercase">Enregister</button>

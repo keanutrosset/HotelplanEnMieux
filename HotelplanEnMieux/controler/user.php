@@ -20,11 +20,14 @@ function home($errorTitle = "", $errorMessage = "")
 
     $vendorAds = dataFromAllVendor();
 
+    $checklist = checklistForMyTravel();
+
     $homePageFlag = true;
     ob_start();
     require "view/home.php";
     exit();
 }
+
 
 function contact(){
   require "view/contact.php";
@@ -37,7 +40,7 @@ function myTravelHistory($userID){
 
       $myparticipateTravel = myparticipateTravel($userID);
 
-      $checklist = checklistReturn($travelID);
+      $checklist = checklistForMyTravel();
 
       require "view/myTravel.php";
   }
@@ -282,7 +285,7 @@ function participate($userID,$travelID){
 }
 
 //region Email functions
-function sendMailFunction($emailInfo, $mailObject, $mail)
+function sendMailFunction($to, $fromName, $fromEmail, $replyName, $replyEmail, $mailObject, $mailMessage)
 {
   //$to, $fromName, $fromEmail, $replyName, $replyEmail, $mailObject, $mailMessage
 
@@ -309,7 +312,7 @@ function sendMailFunction($emailInfo, $mailObject, $mail)
     //=========
 
     //=====Création du header de l'e-mail.
-    $header = "From: ".$emailInfo["fromName"]."<".$emailInfo["fromEmail"].">".$passage_ligne;
+    $header = "From: ".$fromName."<".$fromEmail.">".$passage_ligne;
     $header.= "Reply-to: ".$replyName."<".$replyEmail.">".$passage_ligne;
     $header.= "MIME-Version: 1.0".$passage_ligne;
     $header.= "Content-Type: multipart/alternative;".$passage_ligne." boundary=\"$boundary\"".$passage_ligne;
@@ -337,10 +340,7 @@ function sendMailFunction($emailInfo, $mailObject, $mail)
 }
 
 function contactEmail($userInfo){
-    sendMailFunction("keanu.trosset@cpnv.ch", $userInfo["userName"], $userInfo["userEmail"], $userInfo["userName"], $userInfo["userEmail"], "Formulaire de contact", $userInfo["userMessage"]);
 
-    $mailObject = "HotelplanEnMieux - ContactForm";
-    $mail = "keanu.trosset@cpnv.ch";
-
-    require "view/Contact.php";
+    sendMailFunction("keanu.trosset@cpnv.ch", $userInfo["userName"], $userInfo["userEmail"], $userInfo["userName"], $userInfo["userEmail"], "HotelplanEnMieux - ContactForm", $userInfo["userMessage"]);
+    header("Location:?action=contact");
 }
